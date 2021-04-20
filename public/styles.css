@@ -1,0 +1,113 @@
+.helloInput {
+    width: 200px;
+  }
+  
+  .title{
+    color: #2c365c;
+  }
+  .mainText{
+    color:#2c365c;
+  }
+  
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: #d5e4e0;
+  
+  }
+  
+  nav, nav .nav-wrapper i, nav a.sidenav-trigger, nav a.sidenav-trigger i {
+    background-color: rgba(51,51,51,0.08);
+    max-height: 55px;
+  }
+  
+  .page-footer, .page-header {
+    background-color: #d5e4e0;
+  }
+  main {
+    flex: 1 0 auto;
+  }
+   
+  .hidden
+  {
+      display: none;
+  }
+  
+  .center
+  {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .card
+  {
+    background-color: #c5cadf;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    display: inline-block;
+  }
+  
+  .modal {
+    padding-bottom: 0px;
+    min-height:580px;
+    overflow: auto; 
+  }
+  .modal-footer {
+    clear:both 
+  }
+  
+  /* used for setting size of mini profile pictures */
+  .miniImg {
+  max-height: 70px;
+  width: auto
+  }
+  
+  .profileCard {
+    max-width: 500px;
+  }
+  .fishCard {
+    max-width: 300px;
+    max-height: 300px;
+
+    padding: 5px;
+    display: inline-block;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    vertical-align: top;
+    border-radius: 5px;
+  }
+  
+  .card {
+    border-radius: 5px;
+  }
+  /* used for setting images to "medium" size (restricted width, preserving ratio) */ 
+  .medImg {
+    max-width: 200px;
+    max-height: auto;
+    }
+  
+    .listPane {
+      background-color: white;
+      padding-top: 15px;
+      padding-bottom: 10px;
+      padding-left: 30px;
+      padding-right: 30px;
+      margin-bottom: 20px;
+      margin-top: 5px;
+    }
+  
+    /*keeps match elements on the same line and sets height*/
+    .matchRow {
+        height: 70px;
+        line-height: 70px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 5%; 
+        font-size:17px;
+      }

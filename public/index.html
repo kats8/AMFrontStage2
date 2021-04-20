@@ -13,26 +13,45 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>Hello You</h1>
+    <div class="container center " id="matching">
         <div class="row">
-            <div class="input-field col s12">
-                <input value="a name" id="nameBox" type="text" class="validate">
-                <label class="active" for="nameBox">Name</label>
+            <h3 id="title">Angler Mate</h3>
             </div>
-        </div>
-        <a id="btnName" class="waves-effect waves-light btn">Press Me</a>
+        <div class="col s12 m8 l3 card" style="margin-top:10px">
+            <div class="center image">
 
-        <div class="row">
-            <h3>Result GoesvHere</h3>
-            <div class="row" id="results">
-                <div class="input-field col s6">
-                    <input value="" id="result">
-                    <label class="active" for="result">Result</label>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input value="URL" id="nameBox" type="text" class="validate">
+                        
+                    </div>
+                    <div>
+                        <label class="active" for="nameBox">Link for photo</label>
+                    </div>
+                    <div id="instructions" style="padding-top:5px">
+                        <p> <em>Provide the link of the picture to match</em>
+                        </p>
+                    </div>
+                    <a id="btnClassify" class="btn waves-effect waves-light" style="color:palevioletred">Press Me for Image result</a>
+                </div>
+                <div class="row valign-wrapper">
+                    <img src="" id="urlPic" alt="" draggable="false"
+                        class="center fishCard responsive-img">
+                </div>
+                <div class="row center">
+                    <div id="fishLabel">Info placeholder</div>
                 </div>
             </div>
+            
+        </div>
+        <div id="info" style="padding-top:5px">
+            <p> <em>Provide the link of the picture to match</em>
+            </p>
         </div>
     </div>
+    
+
+   
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
