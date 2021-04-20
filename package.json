@@ -7,6 +7,10 @@
     "ibm-watson": "^6.0.4",
     "mongodb": "^3.6.0"
   },
+  "engines": {
+    "node": "12.18.0",
+    "npm": "7.10.0"
+  },
   "description": "basic node",
   "main": "app.js",
   "scripts": {
@@ -21,9 +25,5 @@
   "bugs": {
     "url": "https://github.com/kats8/basicNode/issues"
   },
-  "homepage": "https://github.com/kats8/basicNode#readme",
-  "engines": {
-    "node": "node 15.14.0",
-    "npm": "7.10.0"
-  }
+  "homepage": "https://github.com/kats8/basicNode#readme"
 }
