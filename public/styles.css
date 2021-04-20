@@ -1,29 +1,38 @@
 .helloInput {
     width: 200px;
   }
+
+  #urlBox {
+      background-color: white;
+      font-size: 0.8em;
+      height: 10 px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-radius: 5px;
+  }
   
   .title{
     color: #2c365c;
   }
-  .mainText{
-    color:#2c365c;
-  }
+
   
   body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-    background-color: #d5e4e0;
-  
+    background-color: rgb(197, 220, 219);
+    color: rgb(67, 26, 26);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
   }
-  
+
+
   nav, nav .nav-wrapper i, nav a.sidenav-trigger, nav a.sidenav-trigger i {
     background-color: rgba(51,51,51,0.08);
-    max-height: 55px;
+    max-height: 45px;
   }
   
   .page-footer, .page-header {
-    background-color: #d5e4e0;
+    background-color: #b6d2ca;
   }
   main {
     flex: 1 0 auto;
@@ -43,7 +52,7 @@
   
   .card
   {
-    background-color: #c5cadf;
+    background-color: whitesmoke;
     padding-top: 0px;
     padding-bottom: 5px;
     padding-left: 15px;
@@ -51,6 +60,7 @@
     margin-bottom: 0px;
     margin-top: 0px;
     display: inline-block;
+    border-radius: 5px;
   }
   
   .modal {
@@ -63,14 +73,9 @@
   }
   
   /* used for setting size of mini profile pictures */
-  .miniImg {
-  max-height: 70px;
-  width: auto
-  }
+
   
-  .profileCard {
-    max-width: 500px;
-  }
+
   .fishCard {
     max-width: 300px;
     max-height: 300px;
@@ -81,6 +86,7 @@
     margin-bottom: 0px;
     vertical-align: top;
     border-radius: 5px;
+
   }
   
   .card {

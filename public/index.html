@@ -5,57 +5,92 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello You (Basic Node App)</title>
+    <title>Angler Mate</title>
 
-    <!-- Bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <!-- Materialze-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Materialize icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <link href="styles.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container center " id="matching">
-        <div class="row">
-            <h3 id="title">Angler Mate</h3>
-            </div>
-        <div class="col s12 m8 l3 card" style="margin-top:10px">
-            <div class="center image">
+    <header>
+        <nav>
+            <!--Navbar-->
+            <div class="nav-wrapper center">
+                <!-- Centre icon-->
+                <a href="#" class="brand-logo center"><img src="assets/fishIcon.png" id="centreIcon" alt="" 
+                    style="max-height: 40px; padding-top: 2px; padding-bottom: 2px;"></a>
 
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input value="URL" id="nameBox" type="text" class="validate">
-                        
-                    </div>
-                    <div>
-                        <label class="active" for="nameBox">Link for photo</label>
-                    </div>
-                    <div id="instructions" style="padding-top:5px">
-                        <p> <em>Provide the link of the picture to match</em>
-                        </p>
-                    </div>
-                    <a id="btnClassify" class="btn waves-effect waves-light" style="color:palevioletred">Press Me for Image result</a>
-                </div>
-                <div class="row valign-wrapper">
-                    <img src="" id="urlPic" alt="" draggable="false"
-                        class="center fishCard responsive-img">
-                </div>
+                <ul id="nav-mobile" class="right">
+                    <li><a href="Analyse.html">Fish Identification</a></li>
+                    <li><a href="Monitor.html">Fish Monitoring</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+
+            </div>
+           
+        </nav>
+    </header>
+    <main>
+
+
+        <!--The welcome screen shown to new users-->
+        <div class="container center" id="welcome">
+            <div class="center col s12 m10 l8">
+                <h3>Welcome to Angler Mate</h3>
+                <p><i>Angler Mate allows you match your fish photographs against fish species for relevant regulations
+                        and advice.</i></p>
+                <p>Please provide your image link below</p>
+                <input value="enter your link here" id="urlBox" type="text" class="validate">
+
+                <label class="active" for="urlBox">Link for photo</label>
                 <div class="row center">
-                    <div id="fishLabel">Info placeholder</div>
+                    <a class="waves-effect waves-light btn" id="btnClassify">What have I caught?</a>
                 </div>
             </div>
-            
-        </div>
-        <div id="info" style="padding-top:5px">
-            <p> <em>Provide the link of the picture to match</em>
-            </p>
-        </div>
-    </div>
-    
+            <div class=" row center" style="height: 250px;">
+                <div class="center card col s12 m6 l5" style=" padding: 15px; height: 100%; width: 100; margin: 15px">
+                    <img src="" alt="" id="urlPic" draggable="false" class="fishCard responsive-img">
+                </div>
+                <div class="center card  col s12 m5 l4" id="textInfo"
+                    style="padding: 15px; height: 100%; margin: 15px ">
+                    Some test text
+                </div>
+            </div>
 
-   
+
+        </div>
+        </div>
+
+        <!-- This is the portion to be displayed when viewing profiles for matching purposes; begins as hidden-->
+
+        <!-- displays for monitoring fish species-->
+        <div id="viewLocation" class="container center hidden">
+
+        </div>
+    </main>
+    <footer class="page-footer">
+        <div class="footer-copyright">
+            <div class="container right">
+                © 2021 Copyright Katrina Steen
+            </div>
+        </div>
+    </footer>
+
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <script src="env.js"></script>
 
