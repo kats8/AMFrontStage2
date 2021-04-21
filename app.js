@@ -62,23 +62,12 @@ function analyseImage(requestURL, response) {
   //response.send(JSON.stringify(response.result.images[0].classifiers[0].classes[0].class));
 }
 
+//backup PAAS VR ID
 app.get("/classifyURL", function (request, response) {
   analyseImage(request.query.url, response);
 });
 
 
-//DATABASE MANAGEMENT
-
-
-//const uri = "mongodb+srv://Angler_User:89CL735AU@sit725.63pic.mongodb.net/AM_Fish?retryWrites=true&w=majority";
-//const client = new MongoClient(uri, {useUnifiedTopology: true, useNewUrlParser: true});
-
-//**************&&&&&&&&&&&&&&&&&&&&********************** */
-//Do I need this? It's not coming from the client. It's been worked out on the server
-app.get("/getFishInfo", function (request, response) {
-  let fishID = request.query.fish;
-  returnInfo(fishID, response);
-});
 
 app.get("/checkFishMatch", function (request, response) {
   let objectsFound = request.query.body;
@@ -86,45 +75,7 @@ app.get("/checkFishMatch", function (request, response) {
   checkForFish(objectsFound, response);
 });
 
-/*
-function returnInfo(fishes, res) {
-const uri = "mongodb+srv://Angler_User:89CL735AU@sit725.63pic.mongodb.net/AM_Fish?retryWrites=true&w=majority";
-const client = new MongoClient(uri, {useUnifiedTopology: true, useNewUrlParser: true});
- 
 
-async function run() {
-  try {
-    await client.connect();
-    console.log("Connected to server");
-    //const db = client.db("project");
-    let fishTable = client.db("AM_Fish");
-
-   fishTable.collection("FishRegs").find().sort({ Fish: 1 }).limit(10).toArray(function (err, result) {
-      if (err) throw err;
-      console.log(result);
-      res.send(JSON.stringify(result));
-    });
-
-  } catch (err) {
-    console.log(err.stack);
-  }
-  finally {
-    await client.close();
-  }
-}
-
-run().catch(console.dir);
-}*/
-/*
-const uri = "mongodb+srv://Angler_User:89CL735AU@sit725.63pic.mongodb.net/AM_Fish?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
-let fishes;
-client.connect(err => {
-  fishes = client.db("AM_Fish").collection("FishRegs");
-  console.log("Connected to database");
-  //    client.close();
-});
-*/
 //function to check a single image 'class' name to see if it matches a fish
 function returnInfo(fishName, response) {
   let fishData = null;
@@ -157,6 +108,7 @@ function checkForFish(idfdObjectArray, response) {
   //let objectArray = JSON.parse(idfdObjectArray);
   let objectArray = idfdObjectArray;
   console.log(idfdObjectArray);
+  let arrayToGo = Object.keys(objectArray).length;
 
   try {
     console.log("Checking database");
@@ -166,74 +118,57 @@ function checkForFish(idfdObjectArray, response) {
       //check the fishRegulations database for a match of fish type 
       fishes.find().forEach(function (fishes) {
         //***** */
-        console.log("I'm in here");
+        console.log("I'm in here "+idfdObject.class);
         //if a match is found, check if it scores better than current match score, if so, replace data (better match).
         if (fishes.fish.toLowerCase() == (idfdObject.class).toLowerCase()) {
           fishMatch = true;
-          if (idfdObject.score > score) {
+          if (parseFloat(idfdObject.score) > score) {
             fishData = {
               fish: fishes.fish,
               noxious: fishes.noxious,
               protected: fishes.protected,
               info: fishes.info,
-              score: score,
+              score: idfdObject.score,
               fishMatch: fishMatch
             }
-            console.log("found a matcg");
+            console.log("found a match");
             console.log(fishData);
-
           }
 
-        }
-      })
-    })
-    console.log(fishData);
-    // response.send(JSON.stringify(fishData));
-    response.send(JSON.stringify(fishData));
+        } 
+        console.log(arrayToGo);
 
+      })
+
+      //when checked all values, send the data with any/best match
+      /***** need a way to get this sequential  
+      arrayToGo--;
+      if (arrayToGo<0) {
+        console.log("I'm sending now");
+        response.send(JSON.stringify(fishData));
+      } 
+      */
+    })
 
   } catch (e) {
     console.error(e);
+    console.log(fishData);
 
   }
-
-
-}
-//testing - previously worked
-function returnInfo1(fishName, response) {
-  // fishes.createIndex({fish:-1}, { collation: { locale: 'en', strength: 2 } } );
-  fishes.find({ fish: fishName }, { fish: 1, info: 1, noxious: 1, protected: 1, _id: 0 }).toArray(function (err, result) {
-
-    //  fishes.find({ fish: fishName }, { fish: 1, info: 1, noxious: 1, protected: 1, _id: 0 }).toArray(function (err, result) {
-    if (err) throw err;
-    console.log(result);
-    response.send(JSON.stringify(result));
-  });
-
-  /*
-  fishes.find().sort({ Fish: 1 }).limit(10).toArray(function (err, result) {
-    if (err) throw err;
-    console.log(result);
-    response.send(JSON.stringify(result));
-  });
-  */
-  //db.fishes.find( { fish: fishName }, { fish: 1, info: 1, noxious: 1, protected: 1, _id: 0 } } )
-  // perform actions on the collection object
-
+  response.send(JSON.stringify(fishData));
 
 }
+
 /*
 //insert message
 const insertMessage = (message) => {
   fishes.insertOne({message: message })
 }
-
 const retrieveMessages = (res) => {
   fishes.find().toArray(function (err, result) {
     if (err) throw err;
     res.send(result);
   })
-
 }*/
 
 app.listen(port);
