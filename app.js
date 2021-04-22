@@ -108,55 +108,62 @@ function checkForFish(idfdObjectArray, response) {
   //let objectArray = JSON.parse(idfdObjectArray);
   let objectArray = idfdObjectArray;
   console.log(idfdObjectArray);
-  let arrayToGo = Object.keys(objectArray).length;
+  let recordsToMatch;
+  let checked = 0;
 
   try {
     console.log("Checking database");
     fishes = client.db("AM_Fish").collection("FishRegs");
-    //checkForFish(classesFound);
-    objectArray.forEach((idfdObject) => {
-      //check the fishRegulations database for a match of fish type 
-      fishes.find().forEach(function (fishes) {
-        //***** */
-        console.log("I'm in here "+idfdObject.class);
-        //if a match is found, check if it scores better than current match score, if so, replace data (better match).
-        if (fishes.fish.toLowerCase() == (idfdObject.class).toLowerCase()) {
-          fishMatch = true;
-          if (parseFloat(idfdObject.score) > score) {
-            fishData = {
-              fish: fishes.fish,
-              noxious: fishes.noxious,
-              protected: fishes.protected,
-              info: fishes.info,
-              score: idfdObject.score,
-              fishMatch: fishMatch
+    //get number of fish records in database
+    fishes.countDocuments().then(result => {
+      console.log(result);
+      let totalRecords = result*objectArray.length;
+      console.log(totalRecords);
+      //checkForFish(classesFound);
+      objectArray.forEach((idfdObject) => {
+        recordsToMatch = Object.assign(totalRecords);
+        //check the fishRegulations database for a match of fish type 
+        fishes.find().forEach(function (fishes) {
+                  //if a match is found, check if it scores better than current match score, if so, replace data (better match).
+          if (fishes.fish.toLowerCase() == (idfdObject.class).toLowerCase()) {
+            fishMatch = true;
+            if (parseFloat(idfdObject.score) > score) {
+              fishData = {
+                fish: fishes.fish,
+                noxious: fishes.noxious,
+                protected: fishes.protected,
+                info: fishes.info,
+                score: idfdObject.score,
+                fishMatch: fishMatch
+              }
+              console.log("found a match");
+              console.log(fishData);
             }
-            console.log("found a match");
-            console.log(fishData);
+
           }
+          recordsToMatch--;
+          console.log('records to match in current set ' + recordsToMatch);
+          //once all records checked, send response
+          if (recordsToMatch == 0) {
+            console.log(fishData);
+            response.send(JSON.stringify(fishData));
+          }
+        })
 
-        } 
-        console.log(arrayToGo);
+/*
+        console.log(checked.length + " " + objectArray.length);
 
+        if (checked >= objectArray.length) {
+          console.log("I'm sending " + fishData.fishMatch + " " + fishData.fish);
+          response.send(JSON.stringify(fishData));
+        }*/
       })
-
-      //when checked all values, send the data with any/best match
-      /***** need a way to get this sequential  
-      arrayToGo--;
-      if (arrayToGo<0) {
-        console.log("I'm sending now");
-        response.send(JSON.stringify(fishData));
-      } 
-      */
     })
-
   } catch (e) {
     console.error(e);
     console.log(fishData);
 
-  }
-  response.send(JSON.stringify(fishData));
-
+  } 
 }
 
 /*
