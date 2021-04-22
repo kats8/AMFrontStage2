@@ -70,9 +70,17 @@ app.get("/classifyURL", function (request, response) {
 
 
 app.get("/checkFishMatch", function (request, response) {
+  try {
   let objectsFound = request.query.body;
-  console.log("this is objects Found in checkFishMatch " + objectsFound);
   checkForFish(objectsFound, response);
+  }
+  catch(e){
+    console.log(error)
+    response.send(error);
+  }
+  //****** */
+ // console.log("this is objects Found in checkFishMatch " + objectsFound);
+  
 });
 
 
@@ -107,26 +115,22 @@ function checkForFish(idfdObjectArray, response) {
   let fishData = { fishMatch: fishMatch };
   //let objectArray = JSON.parse(idfdObjectArray);
   let recordsToMatch;
-  let checked = 0;
-
   try {
-    //moved these two lines from above try *****
-  let objectArray = idfdObjectArray;
-  console.log(idfdObjectArray);
-  //------------
+    let objectArray = idfdObjectArray;
+    console.log(idfdObjectArray);
     console.log("Checking database");
     fishes = client.db("AM_Fish").collection("FishRegs");
     //get number of fish records in database
     fishes.countDocuments().then(result => {
       console.log(result);
-      let totalRecords = result*objectArray.length;
+      let totalRecords = result * objectArray.length;
       console.log(totalRecords);
       //checkForFish(classesFound);
       objectArray.forEach((idfdObject) => {
         recordsToMatch = Object.assign(totalRecords);
         //check the fishRegulations database for a match of fish type 
         fishes.find().forEach(function (fishes) {
-                  //if a match is found, check if it scores better than current match score, if so, replace data (better match).
+          //if a match is found, check if it scores better than current match score, if so, replace data (better match).
           if (fishes.fish.toLowerCase() == (idfdObject.class).toLowerCase()) {
             fishMatch = true;
             if (parseFloat(idfdObject.score) > score) {
@@ -152,15 +156,8 @@ function checkForFish(idfdObjectArray, response) {
           }
         })
 
-/*
-        console.log(checked.length + " " + objectArray.length);
-
-        if (checked >= objectArray.length) {
-          console.log("I'm sending " + fishData.fishMatch + " " + fishData.fish);
-          response.send(JSON.stringify(fishData));
-        }*/
       })
-    }).catch(error=>{
+    }).catch(error => {
       console.log(error);
       console.log(fishData);
     })
@@ -169,20 +166,8 @@ function checkForFish(idfdObjectArray, response) {
     console.error(e);
     console.log(fishData);
 
-  } 
+  }
 }
-
-/*
-//insert message
-const insertMessage = (message) => {
-  fishes.insertOne({message: message })
-}
-const retrieveMessages = (res) => {
-  fishes.find().toArray(function (err, result) {
-    if (err) throw err;
-    res.send(result);
-  })
-}*/
 
 app.listen(port);
 console.log("Listening on port ", port);
