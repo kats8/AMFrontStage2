@@ -11,12 +11,9 @@ $(document).ready(function () {
     }
     let textString ="";
 
-    //using the cloud function
+    //using the cloud function (FAAS) to get meaningful AI recognition data
     $.get(urlRemoteVR, input, function (result) {
-      //old way
-      // imageResult = jQuery.parseJSON(result);
       imageResult = result;
-      //$('#textInfo').html(result.body[0].class);
       $('#urlPic').attr("src", inputURL);
       //alert(result.images[0].classifiers[0].classes[0].class); 
       //alert(imageResult[0].class);
@@ -45,7 +42,9 @@ textString += `<p><b><font color="red">[Noxious]</font></b></p>`
       .catch(function () {
         $('#textInfo').html("We couldn't find a valid image at that url");
       });
-  })
+  }).catch(function () {
+    $('#textInfo').html("We couldn't find a valid image at that url");
+  });
 })
 
  //const getImageData = doSomething().then(successCallback, failureCallback);

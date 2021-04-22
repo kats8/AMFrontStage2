@@ -106,12 +106,14 @@ function checkForFish(idfdObjectArray, response) {
   let score = 0;
   let fishData = { fishMatch: fishMatch };
   //let objectArray = JSON.parse(idfdObjectArray);
-  let objectArray = idfdObjectArray;
-  console.log(idfdObjectArray);
   let recordsToMatch;
   let checked = 0;
 
   try {
+    //moved these two lines from above try *****
+  let objectArray = idfdObjectArray;
+  console.log(idfdObjectArray);
+  //------------
     console.log("Checking database");
     fishes = client.db("AM_Fish").collection("FishRegs");
     //get number of fish records in database
@@ -158,7 +160,11 @@ function checkForFish(idfdObjectArray, response) {
           response.send(JSON.stringify(fishData));
         }*/
       })
+    }).catch(error=>{
+      console.log(error);
+      console.log(fishData);
     })
+
   } catch (e) {
     console.error(e);
     console.log(fishData);
