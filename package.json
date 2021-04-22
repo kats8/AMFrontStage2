@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "ibm-watson": "^6.0.4",
-    "mongodb": "^3.6.6"
+    "mongodb": "^3.6.6",
+    "request": "^2.88.2"
   },
   "engines": {
     "node": "12.18.0",
@@ -25,5 +27,6 @@
   "bugs": {
     "url": "https://github.com/kats8/basicNode/issues"
   },
-  "homepage": "https://github.com/kats8/basicNode#readme"
+  "homepage": "https://github.com/kats8/basicNode#readme",
+  "keywords": []
 }

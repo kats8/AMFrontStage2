@@ -1,5 +1,7 @@
 //allows path manipulation cross-platform
 //const path = require("path");
+const cors = require("cors");
+const req = require("request");
 const MongoClient = require('mongodb').MongoClient;
 var express = require("express");
 var bodyParser = require("body-parser");
@@ -13,6 +15,7 @@ client.connect(err => {
   //    client.close();
 });
 
+//used for manual VR connection (backup - PAAS)
 const VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3');
 const { IamAuthenticator } = require('ibm-watson/auth');
 const vrKey = 'nldt-7z9STbvStrJW26QC6fimSW-8puxcT1ZGuF-uQc7';
@@ -27,6 +30,7 @@ const visualRecognition = new VisualRecognitionV3({
 
 
 const app = express();
+app.use(cors());
 
 //to allow use of POST
 app.use(bodyParser.json());
