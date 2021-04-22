@@ -10,6 +10,7 @@ $(document).ready(function () {
       url: inputURL
     }
     let textString = "";
+    let classFound = "";
 
     //using the cloud function (FAAS) to get meaningful AI recognition data
     $.get(urlRemoteVR, input, function (result) {
@@ -17,11 +18,19 @@ $(document).ready(function () {
       $('#urlPic').attr("src", inputURL);
       //alert(result.images[0].classifiers[0].classes[0].class); 
       //alert(imageResult[0].class);
-      //return imageResult;
+      // alert('imageres class: '+imageResult[0].class);
+      try {
+        classFound = imageResult[0].class;
+      }
+
+      catch (e) {
+        console.log(e);
+        $('#textInfo').html("We couldn't find a valid image at that url");
+      }
     }).then(result => $.get("/checkFishMatch", { body: result }, function (matchInfo) {
       matchData = jQuery.parseJSON(matchInfo);
       if (matchData.fishMatch) {
-           //if Noxious, add highlighted notice.
+        //if Noxious, add highlighted notice.
         if (matchData.noxious) {
           textString += `<p><b><font color="red">[Noxious]</font></b></p>`
         }
@@ -33,30 +42,22 @@ $(document).ready(function () {
         textString += `<p>${matchData.info}</p>`;
       }
       else {
-        textString = "Looks like a " + imageResult[0].class + ", but we couldn't match it with a fish species on our database. More species are coming soon!"
+        //if no match, did we at least recognise an image object?
+        if (imageResult[0].hasOwnProperty('class')) {
+          textString = `Looks like a ${classFound}, but couldn't match it with a fish species on our database. More species are coming soon!`;
+        }
+        else {
+          textString = "Couldn't find a valid image at that url.";
+        }
       }
-   
+
 
       $('#textInfo').html(textString);
 
-    })).fail(function (error, status) {
-      console.log(error);
-      console.log(status);
-      $('#textInfo').html("We couldn't find a valid image at that url");
-    })
-    //  .catch(function () {
-    //    $('#textInfo').html("We couldn't find a valid image at that url");
-    //  });
+    })).catch(function () {
+      $('#textInfo').html("We couldn't find a valid image at that url.");
+    });
   })
+
 })
 
- //const getImageData = doSomething().then(successCallback, failureCallback);
-/*
-doSomething()
-.then(result => doSomethingElse(result))
-.then(newResult => doThirdThing(newResult))
-.then(finalResult => {
-  console.log(`Got the final result: ${finalResult}`);
-})
-.catch(failureCallback);
-*/

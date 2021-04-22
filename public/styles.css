@@ -57,7 +57,7 @@
   .card
   {
     background-color: whitesmoke;
-    padding-top: 0px;
+    padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 15px;
     padding-right: 15px;
@@ -67,23 +67,10 @@
     border-radius: 5px;
   }
   
-  .modal {
-    padding-bottom: 0px;
-    min-height:580px;
-    overflow: auto; 
-  }
-  .modal-footer {
-    clear:both 
-  }
-  
-  /* used for setting size of mini profile pictures */
-
-  
 
   .fishCard {
     max-width: 300px;
     max-height: 300px;
-
     padding: 5px;
     display: inline-block;
     margin-top: 0px;
@@ -92,6 +79,7 @@
     border-radius: 5px;
 
   }
+
   
   .card {
     border-radius: 5px;

@@ -124,7 +124,6 @@ function checkForFish(idfdObjectArray, response) {
     fishes.countDocuments().then(result => {
       console.log(result);
       let totalRecords = result * objectArray.length;
-      console.log(totalRecords);
       //checkForFish(classesFound);
       objectArray.forEach((idfdObject) => {
         recordsToMatch = Object.assign(totalRecords);
@@ -148,7 +147,7 @@ function checkForFish(idfdObjectArray, response) {
 
           }
           recordsToMatch--;
-          console.log('records to match in current set ' + recordsToMatch);
+         // console.log('records to match in current set ' + recordsToMatch);
           //once all records checked, send response
           if (recordsToMatch == 0) {
             console.log(fishData);
