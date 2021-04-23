@@ -1,4 +1,6 @@
 let urlRemoteVR = 'https://us-south.functions.appdomain.cloud/api/v1/web/Katrina.Steen%40gmail.com_dev/default/AM%20Fish%20Analysis'
+const urlClassify='/classifyURL';
+const checkFishMatch ='/checkFishMatch';
 
 $(document).ready(function () {
   console.log('Ready');
@@ -28,7 +30,9 @@ $(document).ready(function () {
         $('#textInfo').html("We couldn't find a valid image at that url");
       }
     }).then(result => $.get("/checkFishMatch", { body: result }, function (matchInfo) {
-      matchData = jQuery.parseJSON(matchInfo);
+//***** 
+    let matchData = jQuery.parseJSON(matchInfo);
+   // let matchData = matchInfo.body;
       if (matchData.fishMatch) {
         //if Noxious, add highlighted notice.
         if (matchData.noxious) {
