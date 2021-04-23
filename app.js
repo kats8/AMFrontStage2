@@ -45,10 +45,11 @@ app.get("/displayHello", function (request, response) {
   response.json("Hello " + user_name + "!");
 });
 
-//get request - hop for API to check if there's an image match for a fish in the database and returns details
+//get request - forwarding API to check if there's an image match for a fish in the database and returns details
 app.get('/checkFishMatch',function(request,response){
   let inBody = request.query.body;
-  reqObject="http://localhost:8081/checkFishMatch?body="+JSON.stringify(inBody);
+   // reqObject="http://localhost:8081/checkFishMatch?body="+JSON.stringify(inBody);
+   reqObject="https://anglermatehub.us-south.cf.appdomain.cloud/checkFishMatch?body="+JSON.stringify(inBody);
   req(reqObject,  (err, result) => {
     if (err) { return console.log(err); }
   console.log(result.body)

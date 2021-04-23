@@ -1,6 +1,7 @@
 let urlRemoteVR = 'https://us-south.functions.appdomain.cloud/api/v1/web/Katrina.Steen%40gmail.com_dev/default/AM%20Fish%20Analysis'
 const urlClassify='/classifyURL';
 const checkFishMatch ='/checkFishMatch';
+const qMark = 'assets/fishIcon.png';
 
 $(document).ready(function () {
   console.log('Ready');
@@ -28,6 +29,7 @@ $(document).ready(function () {
       catch (e) {
         console.log(e);
         $('#textInfo').html("We couldn't find a valid image at that url");
+        $('#urlPic').attr("src", qMark);
       }
     }).then(result => $.get("/checkFishMatch", { body: result }, function (matchInfo) {
 //***** 
@@ -52,6 +54,7 @@ $(document).ready(function () {
         }
         else {
           textString = "Couldn't find a valid image at that url.";
+          $('#urlPic').attr("src", qMark);
         }
       }
 
@@ -60,6 +63,8 @@ $(document).ready(function () {
 
     })).catch(function () {
       $('#textInfo').html("We couldn't find a valid image at that url.");
+      $('#urlPic').attr("src", qMark);
+
     });
   })
 
