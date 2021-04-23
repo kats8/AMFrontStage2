@@ -5,10 +5,16 @@ const qMark = 'assets/fishIcon.png';
 
 $(document).ready(function () {
   console.log('Ready');
+  $('#textInfo').html("");
+
 
   $('#btnClassify').click(() => {
     let imageResult;
     let inputURL = $('#urlBox').val();
+    $('#textInfo').html("Please Wait...");
+    $('#urlPic').attr("src", qMark);
+
+
     let input = {
       url: inputURL
     }
@@ -50,7 +56,7 @@ $(document).ready(function () {
       else {
         //if no match, did we at least recognise an image object?
         if (imageResult[0].hasOwnProperty('class')) {
-          textString = `Looks like a ${classFound}, but couldn't match it with a fish species on our database. More species are coming soon!`;
+          textString = `Looks like a ${classFound}, but doesn't match any fish species on our database. More species are coming soon!`;
         }
         else {
           textString = "Couldn't find a valid image at that url.";
