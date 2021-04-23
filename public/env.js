@@ -1,12 +1,11 @@
 let urlRemoteVR = 'https://us-south.functions.appdomain.cloud/api/v1/web/Katrina.Steen%40gmail.com_dev/default/AM%20Fish%20Analysis'
-const urlClassify='/classifyURL';
-const checkFishMatch ='/checkFishMatch';
+const urlClassify = '/classifyURL';
+const checkFishMatch = '/checkFishMatch';
 const qMark = 'assets/fishIcon.png';
 
 $(document).ready(function () {
   console.log('Ready');
   $('#textInfo').html("");
-
 
   $('#btnClassify').click(() => {
     let imageResult;
@@ -21,26 +20,20 @@ $(document).ready(function () {
     let textString = "";
     let classFound = "";
 
-    //using the cloud function (FAAS) to get meaningful AI recognition data
-    $.get(urlRemoteVR, input, function (result) {
-      imageResult = result;
+    $.get(urlClassify, input, function (result) {
       $('#urlPic').attr("src", inputURL);
-      //alert(result.images[0].classifiers[0].classes[0].class); 
-      //alert(imageResult[0].class);
-      // alert('imageres class: '+imageResult[0].class);
       try {
+        imageResult = jQuery.parseJSON(result);
         classFound = imageResult[0].class;
       }
-
       catch (e) {
         console.log(e);
-        $('#textInfo').html("We couldn't find a valid image at that url");
+        $('#textInfo').html("We couldn't find a valid image at that URL");
         $('#urlPic').attr("src", qMark);
       }
     }).then(result => $.get("/checkFishMatch", { body: result }, function (matchInfo) {
-//***** 
-    let matchData = jQuery.parseJSON(matchInfo);
-   // let matchData = matchInfo.body;
+      let matchData = jQuery.parseJSON(matchInfo);
+      //If a fish match was returned, fill in info accordingly
       if (matchData.fishMatch) {
         //if Noxious, add highlighted notice.
         if (matchData.noxious) {
@@ -56,23 +49,18 @@ $(document).ready(function () {
       else {
         //if no match, did we at least recognise an image object?
         if (imageResult[0].hasOwnProperty('class')) {
-          textString = `Looks like a ${classFound}, but doesn't match any fish species on our database. More species are coming soon!`;
+          textString = `Looks like a ${classFound}, but doesn't match any aquatic species on our database. More species are coming soon!`;
         }
         else {
-          textString = "Couldn't find a valid image at that url.";
+          textString = "Couldn't find a valid image at that URL.";
           $('#urlPic').attr("src", qMark);
         }
       }
-
-
       $('#textInfo').html(textString);
-
     })).catch(function () {
-      $('#textInfo').html("We couldn't find a valid image at that url.");
+      $('#textInfo').html("We couldn't find a valid image at that URL.");
       $('#urlPic').attr("src", qMark);
-
     });
   })
-
 })
 
