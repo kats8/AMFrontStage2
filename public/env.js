@@ -43,7 +43,7 @@ $(document).ready(function () {
         }
         //if Protected, add highlighted notice
         if (matchData.protected) {
-          textString += `<p><b>font color="red">[Protected]</font></b></p>`
+          textString += `<p><b><font color="red">[Protected]</font></b></p>`
         }
         textString += `<b> ${matchData.fish} </b>`;
         textString += `<p>${matchData.info}</p>`;
