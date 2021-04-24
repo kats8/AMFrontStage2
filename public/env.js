@@ -5,14 +5,16 @@ const qMark = 'assets/fishIcon.png';
 
 $(document).ready(function () {
   console.log('Ready');
+  $('#textInfo').addClass("hidden");
   $('#textInfo').html("");
 
   $('#btnClassify').click(() => {
     let imageResult;
     let inputURL = $('#urlBox').val();
+    $('#textInfo').removeClass("hidden");
+    //Displays 'please wait' while waiting for responses to be returned
     $('#textInfo').html("Please Wait...");
     $('#urlPic').attr("src", qMark);
-
 
     let input = {
       url: inputURL
