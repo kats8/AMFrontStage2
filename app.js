@@ -41,7 +41,7 @@ app.get("/classifyURL", function (request, response) {
   //--------------
   //(for shortcut straight to cloud FAAS (testing): reqObject = urlRemoteVR+"?url="+imageURL;
   //local testing via local machine: reqObject = "http://localhost:8081/classifyURL?url="+imageURL;
-  reqObject = "http://localhost:8081/classifyURL?url="+imageURL;
+  //reqObject = "http://localhost:8081/classifyURL?url="+imageURL;
   //-------------
   reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/classifyURL?url=" + imageURL;
 
