@@ -5,7 +5,6 @@ const express = require("express");
 //url for cloud function (accesses 3rd party VR services)
 const urlRemoteVR = 'https://us-south.functions.appdomain.cloud/api/v1/web/Katrina.Steen%40gmail.com_dev/default/AM%20Fish%20Analysis'
 
-//test commit
 const app = express();
 app.use(cors());
 
