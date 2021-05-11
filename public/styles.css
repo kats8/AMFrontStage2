@@ -27,6 +27,7 @@ body {
     background-color: rgb(225, 241, 241);
   color: rgb(67, 26, 26);
   font-family:Verdana, Geneva, Tahoma, sans-serif;
+  z-index: 0;
 }
 
 .alertText {
@@ -123,3 +124,21 @@ main {
       margin-left: 5%; 
       font-size:17px;
     }
+
+    .underlay {
+      position: relative;
+      z-index: 0;
+    }
+.overlay
+{
+margin-top:40px;
+margin-right:40px;
+height: 70px;
+vertical-align: middle;
+text-align: center;
+width: 200px;
+font-size: 0.8em;
+z-index: 1;
+max-width:70%;
+position: absolute;
+}

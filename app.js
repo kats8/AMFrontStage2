@@ -2,17 +2,18 @@ const cors = require("cors");
 const req = require("request");
 const express = require("express");
 const bodyParser = require("body-parser");
+const app = express();
+app.use(cors());
+let userSocket;
 
 //required for sockets
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-const app = express();
-app.use(cors());
-
 var port = process.env.PORT || 8088;
 
 app.use(express.static(__dirname + '/public'));
+
 
 io.on('connection', (socket) => {
   //keep track of socket, as users don’t need updates on own matches
@@ -31,6 +32,11 @@ app.get("/displayHello", function (request, response) {
   response.json("Hello " + user_name + "!");
 });
 
+//endpoint to give client their socketId
+app.get('/socketid', function (req, res) {
+  res.send(userSocket)
+});
+
 //get request - forwarding API to check if there's an image match for a fish in the database and returns details
 app.get('/checkFishMatch', function (request, response) {
   let inBody = request.query.body;
@@ -40,6 +46,25 @@ app.get('/checkFishMatch', function (request, response) {
   //access via cloud (PAAS)
   reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/checkFishMatch?body=" + JSON.stringify(inBody);
   req(reqObject, (err, result) => {
+    try {
+      let matchData = JSON.parse(result.body);
+      if (matchData.fishMatch) {
+        const match = {
+          fish: matchData.fish,
+          lat: null,
+          long: null,
+          socket: userSocket
+        }
+        io.emit('matchFound', match);
+        console.log('match is found');
+      } else {
+        console.log('match is not found');
+      }
+      console.log(matchData.fishMatch);
+    } catch (e) {
+      console.log(e);
+    }
+
     if (err) { return console.log(err); }
     console.log(result.body)
     response.send(result.body);
@@ -64,5 +89,5 @@ app.get("/classifyURL", function (request, response) {
   });
 });
 
-app.listen(port);
+http.listen(port);
 console.log("Listening on port ", port);

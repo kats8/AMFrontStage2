@@ -48,7 +48,7 @@
                     <a class="waves-effect waves-light btn" id="btnClassify">What have I caught?</a>
                 </div>
             </div>
-            <div class="row" style="max-height: 200px;" id="picDiv">
+            <div class="row underlay" style="max-height: 200px;" id="picDiv">
                 <div class="center card col s11 m6 l6"
                     style=" padding: 15px; max-height: 100%; max-width: 100%; margin: 15px">
                     <img src="assets/fishIcon.png" alt="" id="urlPic" draggable="false" class="fishCard responsive-img">
@@ -57,7 +57,8 @@
                     style="padding: 15px; max-height: 100%; max-width: 100%; margin: 15px ">
                 </div>
             </div>
-
+            <div class="overlay card" id="alertInfo"></div>
+            </div>
 
         </div>
         </div>
@@ -78,6 +79,7 @@
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

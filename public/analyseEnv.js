@@ -2,9 +2,30 @@ let urlRemoteVR = 'https://us-south.functions.appdomain.cloud/api/v1/web/Katrina
 const urlClassify = '/classifyURL';
 const checkFishMatch = '/checkFishMatch';
 const qMark = 'assets/fishIcon.png';
+let socketId;
 
 $(document).ready(function () {
   console.log('Ready');
+
+  $.get('/socketid', function(res){
+    socketId=res
+  });
+
+
+var socketConnection = io.connect();
+socketConnection.on('connect', function() {
+ // socket = socketConnection.socket.sessionid; //
+});
+
+  //to display matches of other users
+  socketConnection.on('matchFound', match => {
+    //only display if not me
+    if (socketId != match.socket) {
+      let theString = `Someone just identified a ${match.fish}!`;
+      $('#alertInfo').html(theString);
+      console.log(theString);
+    }
+  }); 
   $('#textInfo').addClass("hidden");
   $('#textInfo').html("");
 
