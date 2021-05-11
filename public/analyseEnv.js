@@ -26,21 +26,9 @@ $(document).ready(function () {
       let theString = `Someone just identified a ${match.fish}!`;
       $('#alertInfo').html(theString);
       console.log(theString);
-      /*
-      for (i = 0; i < 1.1; i = i + 0.1) {
-       // setTimeout(function () { document.getElementById('alertInfo').style.opacity = i; }, 10000)
-       //setTimeout(function () { alertOpacity = i; }, 1000)
-       setTimeout(function () { document.documentElement.style.setProperty('--alertOpacity', `${i}`)}, 1000)
-      // document.documentElement.style.setProperty('--alertOpacity', `${i}`);
-      }
-      for (i = 1.1; i > 0; i = i - 0.1) {
-        // setTimeout(function () { document.getElementById('alertInfo').style.opacity = i; }, 10000)
-        //setTimeout(function () { alertOpacity = i; }, 1000)
-        setTimeout(function () { document.documentElement.style.setProperty('--alertOpacity', `${i}`)}, 20000)
-       // document.documentElement.style.setProperty('--alertOpacity', `${i}`);
-       }
+      console.log('socketId: '+socketId);
+      console.log('match.socket: '+match.socket);
 
-      }*/
       document.documentElement.style.setProperty('--alertOpacity', `1`);
       setTimeout(function(){ document.documentElement.style.setProperty('--alertOpacity', `0`); }, 4000);
        
@@ -74,7 +62,9 @@ $(document).ready(function () {
         $('#textInfo').html("We couldn't find a valid image at that URL");
         $('#urlPic').attr("src", qMark);
       }
-    }).then(result => $.get("/checkFishMatch", { body: result }, function (matchInfo) {
+  //  }).then(result => $.get("/checkFishMatch", { body: result }, function (matchInfo) {
+    }).then(result => $.get("/checkFishMatch", { body: result, socket: socketId }, function (matchInfo) {
+
       let matchData = jQuery.parseJSON(matchInfo);
       //If a fish match was returned, fill in info accordingly
       if (matchData.fishMatch) {

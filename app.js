@@ -40,6 +40,7 @@ app.get('/socketid', function (req, res) {
 //get request - forwarding API to check if there's an image match for a fish in the database and returns details
 app.get('/checkFishMatch', function (request, response) {
   let inBody = request.query.body;
+ // let theSocket = userSocket;
   //link for local testing (http://localhost:8081/) ------
   //reqObject = "http://localhost:8081/checkFishMatch?body=" + JSON.stringify(inBody);
   //----------
@@ -48,12 +49,14 @@ app.get('/checkFishMatch', function (request, response) {
   req(reqObject, (err, result) => {
     try {
       let matchData = JSON.parse(result.body);
+      let theSocket = request.query.socket;
+
       if (matchData.fishMatch) {
         const match = {
           fish: matchData.fish,
           lat: null,
           long: null,
-          socket: userSocket
+          socket: theSocket
         }
         io.emit('matchFound', match);
         console.log('match is found');
