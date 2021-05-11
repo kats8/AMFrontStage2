@@ -2,6 +2,11 @@
     width: 200px;
   }
 
+  nav, nav .nav-wrapper i, nav a.sidenav-trigger, nav a.sidenav-trigger i {
+    background-color: rgb(5, 172, 172);
+    max-height: 45px;
+  }
+
   #urlBox {
       background-color: white;
       font-size: 0.8em;
@@ -22,7 +27,7 @@
     flex-direction: column;
     background-color: rgb(225, 241, 241);
     color: rgb(67, 26, 26);
-    font-family:Century Gothic;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
 
   .alertText {

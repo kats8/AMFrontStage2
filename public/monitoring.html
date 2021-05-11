@@ -22,33 +22,30 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     
 </head>
-
-<body>
-    <!-- rgb(78, 78, 206) -->
-    <nav style="background-color: rgb(5, 172, 172);">
-        <div class="nav-wrapper">
-          <a href="#!" class="brand-logo" style="padding-left: 1%;">
-            <i class="material-icons">search</i>FindFish
-        </a>
-          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-          <ul class="right hide-on-med-and-down">
-              
-            <li><a href="/"><i class="material-icons">home</i></a></li>
-            <li><span>&emsp;</span></li><li><span>&emsp;</span></li><li><span>&emsp;</span></li><li><span>&emsp;</span></li>
+<header>
+  <nav>
+      <!--Navbar-->
+      <div class="nav-wrapper center">
+        <!-- Centre icon-->
+        <a href="#" class="brand-logo center"><img src="assets/fishIcon.png" id="centreIcon" alt=""
+                style="max-height: 40px; padding-top: 2px; padding-bottom: 2px;"></a>
+        <ul id="nav-mobile" class="right">
+            <li><a href="index.html">Home</a></li>
+              <li><a href="Analyse.html">Fish Identification</a></li>
+           <!--   <li><a href="monitoring.html">Species Tracking</a></li> -->
           </ul>
-        </div>
-      </nav>
-    
-      <ul class="sidenav" id="mobile-demo">
-        <li><a href="/">HOME</a></li>
-      </ul>
-    
+      </div>
+  </nav>
+</header>
+<body>
     <main>
-
+      <div class="center">
+        <p>Select a fish species to display where specimens have been located via Angler Mate</p>
+      </div>
 <br>
         <div class="input-field col-4 s4" style="width: 46%;margin: auto;">
             <select class="browser-default" style="cursor:pointer;border: 1px solid rgb(84, 215, 224);outline: none;border-radius: 8px;">
-              <option value="" disabled selected>Select Specie</option>
+              <option value="" disabled selected>Select Species</option>
               <option value="dummy1">Dummy Specie 1</option>
               <option value="dummy1">Dummy Specie 2</option>
               <option value="dummy1">Dummy Specie 3</option>
@@ -67,7 +64,7 @@
     <footer class="page-footer">
         <div class="footer-copyright">
             <div class="container right">
-                © 2021 Copyright Fish Finder
+                © 2021 Copyright
             </div>
         </div>
     </footer>

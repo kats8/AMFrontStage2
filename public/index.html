@@ -23,17 +23,14 @@
             <!--Navbar-->
             <div class="nav-wrapper center">
                 <!-- Centre icon-->
-                <a href="#" class="brand-logo center"><img src="assets/fishIcon.png" id="centreIcon" alt="" 
-                    style="max-height: 40px; padding-top: 2px; padding-bottom: 2px;"></a>
-<!--Nav bar for pages for future functionality
+                <a href="#" class="brand-logo center"><img src="assets/fishIcon.png" id="centreIcon" alt=""
+                        style="max-height: 40px; padding-top: 2px; padding-bottom: 2px;"></a>
                 <ul id="nav-mobile" class="right">
+                    <!--  <li><a href="index.html">Home</a></li> -->
                     <li><a href="Analyse.html">Fish Identification</a></li>
-                    <li><a href="Monitor.html">Fish Monitoring</a></li>
-                    <li><a href="about.html">About</a></li>
-                </ul>-->
-
+                    <li><a href="monitoring.html">Species Tracking</a></li>
+                </ul>
             </div>
-           
         </nav>
     </header>
     <main>
@@ -43,19 +40,19 @@
         <div class="container center" id="welcome">
             <div class="center ">
                 <h4><b>Welcome to Angler Mate</b></h4>
-                <p><i>Angler Mate allows you match your fish photographs against fish species for relevant regulations
-                        and advice.</i></p>
-                <p>Please provide the URL for your image below</p>
-                <input value="enter your image URL here" id="urlBox" type="text" class="validate">
-                <div class="row center">
-                    <a class="waves-effect waves-light btn" id="btnClassify">What have I caught?</a>
+                <p><i>Angler Mate allows you <a href="Analyse.html">match your fish photographs</a> against fish species for relevant regulations and advice.</i></p>
+                <p><i>Users can also <a href="monitoring.html">view species locations</a> that have been tracked via Angler Mate.</i></p>
+                <div class="center card" style=" padding: 15px; max-height: 80%; max-width: 90%; margin: 15px">
+                    <img src="assets/pexels-fish.jpg" alt="" id="pexelPic" draggable="false"
+                        class="fishCard responsive-img">
                 </div>
             </div>
-            <div class="row" style="max-height: 200px;" id="picDiv">
-                <div class="center card col s11 m6 l6" style=" padding: 15px; max-height: 100%; max-width: 100%; margin: 15px">
-                    <img src="assets/fishIcon.png" alt="" id="urlPic" draggable="false" class="fishCard responsive-img">
+            <div class="row hidden" style="max-height: 200px;" id="fishPic">
+                <div class="center card col s11 m6 l6"
+                    style=" padding: 15px; max-height: 80%; max-width: 90%; margin: 15px">
                 </div>
-                <div class="center card col s11 m4 l4 hidden" id="textInfo" style="padding: 15px; max-height: 100%; max-width: 100%; margin: 15px ">
+                <div class="center card col s11 m4 l4 hidden" id="textInfo"
+                    style="padding: 15px; max-height: 100%; max-width: 100%; margin: 15px ">
                 </div>
             </div>
 
@@ -72,7 +69,9 @@
     <footer class="page-footer">
         <div class="footer-copyright">
             <div class="container right">
-                © 2021 Copyright Katrina Steen
+                © 2021 Copyright
+                <div class="tiny"><small-font><i>Photo by Taryn Elliott from Pexels</i></small-font></div>
+
             </div>
         </div>
     </footer>
