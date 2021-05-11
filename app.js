@@ -1,10 +1,11 @@
 const cors = require("cors");
 const req = require("request");
 const express = require("express");
-//const bodyParser = require("body-parser");
-//url for cloud function (accesses 3rd party VR services)
-const urlRemoteVR = 'https://us-south.functions.appdomain.cloud/api/v1/web/Katrina.Steen%40gmail.com_dev/default/AM%20Fish%20Analysis'
+const bodyParser = require("body-parser");
 
+//required for sockets
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
 const app = express();
 app.use(cors());
@@ -12,6 +13,17 @@ app.use(cors());
 var port = process.env.PORT || 8088;
 
 app.use(express.static(__dirname + '/public'));
+
+io.on('connection', (socket) => {
+  //keep track of socket, as users don’t need updates on own matches
+  userSocket = socket.id
+  console.log('user connected');
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+
+});
 
 //basic test to check functioning
 app.get("/displayHello", function (request, response) {
@@ -26,7 +38,7 @@ app.get('/checkFishMatch', function (request, response) {
   //reqObject = "http://localhost:8081/checkFishMatch?body=" + JSON.stringify(inBody);
   //----------
   //access via cloud (PAAS)
- reqObject="https://anglermatehub.us-south.cf.appdomain.cloud/checkFishMatch?body="+JSON.stringify(inBody);
+  reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/checkFishMatch?body=" + JSON.stringify(inBody);
   req(reqObject, (err, result) => {
     if (err) { return console.log(err); }
     console.log(result.body)
