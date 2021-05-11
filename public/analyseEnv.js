@@ -5,17 +5,19 @@ const qMark = 'assets/fishIcon.png';
 let socketId;
 
 $(document).ready(function () {
+  document.documentElement.style.setProperty('--alertOpacity', `0`)
+  $('#alertInfo').removeClass("hidden");
   console.log('Ready');
 
-  $.get('/socketid', function(res){
-    socketId=res
+  $.get('/socketid', function (res) {
+    socketId = res
   });
 
 
-var socketConnection = io.connect();
-socketConnection.on('connect', function() {
- // socket = socketConnection.socket.sessionid; //
-});
+  var socketConnection = io.connect();
+  socketConnection.on('connect', function () {
+    // socket = socketConnection.socket.sessionid; //
+  });
 
   //to display matches of other users
   socketConnection.on('matchFound', match => {
@@ -24,8 +26,26 @@ socketConnection.on('connect', function() {
       let theString = `Someone just identified a ${match.fish}!`;
       $('#alertInfo').html(theString);
       console.log(theString);
+      /*
+      for (i = 0; i < 1.1; i = i + 0.1) {
+       // setTimeout(function () { document.getElementById('alertInfo').style.opacity = i; }, 10000)
+       //setTimeout(function () { alertOpacity = i; }, 1000)
+       setTimeout(function () { document.documentElement.style.setProperty('--alertOpacity', `${i}`)}, 1000)
+      // document.documentElement.style.setProperty('--alertOpacity', `${i}`);
+      }
+      for (i = 1.1; i > 0; i = i - 0.1) {
+        // setTimeout(function () { document.getElementById('alertInfo').style.opacity = i; }, 10000)
+        //setTimeout(function () { alertOpacity = i; }, 1000)
+        setTimeout(function () { document.documentElement.style.setProperty('--alertOpacity', `${i}`)}, 20000)
+       // document.documentElement.style.setProperty('--alertOpacity', `${i}`);
+       }
+
+      }*/
+      document.documentElement.style.setProperty('--alertOpacity', `1`);
+      setTimeout(function(){ document.documentElement.style.setProperty('--alertOpacity', `0`); }, 4000);
+       
     }
-  }); 
+  });
   $('#textInfo').addClass("hidden");
   $('#textInfo').html("");
 

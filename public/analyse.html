@@ -19,9 +19,10 @@
 
 <body>
     <header>
+        <div class="card overlay hidden" id="alertInfo"></div>
         <nav>
             <!--Navbar-->
-            <div class="nav-wrapper center">
+            <div class="nav-wrapper center underlay">
                 <!-- Centre icon-->
                 <a href="#" class="brand-logo center"><img src="assets/fishIcon.png" id="centreIcon" alt=""
                         style="max-height: 40px; padding-top: 2px; padding-bottom: 2px;"></a>
@@ -30,7 +31,6 @@
                     <!--<li><a href="analyse.html">Fish Identification</a></li>-->
                     <li><a href="monitoring.html">Species Tracking</a></li>
                 </ul>
-
             </div>
 
         </nav>
@@ -39,7 +39,7 @@
 
 
         <!--The welcome screen shown to new users-->
-        <div class="container center" id="welcome">
+        <div class="container center underlay" id="welcome">
             <div class="center ">
                 <p>To match your fish photographs against fish species for relevant regulations
                     and advice, please provide the URL for your image below</p>
@@ -48,18 +48,20 @@
                     <a class="waves-effect waves-light btn" id="btnClassify">What have I caught?</a>
                 </div>
             </div>
+
             <div class="row underlay" style="max-height: 200px;" id="picDiv">
-                <div class="center card col s11 m6 l6"
+                <div class="center card underlay col s11 m6 l6"
                     style=" padding: 15px; max-height: 100%; max-width: 100%; margin: 15px">
                     <img src="assets/fishIcon.png" alt="" id="urlPic" draggable="false" class="fishCard responsive-img">
                 </div>
-                <div class="center card col s11 m4 l4 hidden" id="textInfo"
+                <div class="center card underlay col s11 m4 l4 hidden" id="textInfo"
                     style="padding: 15px; max-height: 100%; max-width: 100%; margin: 15px ">
                 </div>
-            </div>
-            <div class="overlay card" id="alertInfo"></div>
-            </div>
 
+            </div>
+            
+
+        </div>
         </div>
         </div>
 
