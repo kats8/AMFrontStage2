@@ -1,111 +1,148 @@
 .helloInput {
-    width: 200px;
-  }
+  width: 200px;
+}
 
-  #urlBox {
-      background-color: white;
-      font-size: 0.8em;
-      height: 10 px;
-      padding-left: 5px;
-      padding-right: 5px;
-      border-radius: 5px;
-  }
-  
-  .title{
-    color: #2c365c;
-  }
+#urlBox {
+    background-color: white;
+    font-size: 0.8em;
+    height: 10 px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+}
 
-  
-  body {
-    display: flex;
+.tiny
+{
+  font-size: 0.5em;
+}
+.title{
+  color: #2c365c;
+}
+
+
+body {
+  display: flex;
     min-height: 100vh;
     flex-direction: column;
-    background-color: rgb(197, 220, 219);
-    color: rgb(67, 26, 26);
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(225, 241, 241);
+  color: rgb(67, 26, 26);
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  z-index: 0;
+}
+
+.alertText {
+  color: red;
+}
+
+.inline-icon {
+  vertical-align: right;
+  display: inline-block;
+}
+
+nav, nav .nav-wrapper i, nav a.sidenav-trigger, nav a.sidenav-trigger i {
+ /* background-color: rgba(51,51,51,0.08); */
+  background-color: rgb(5, 172, 172);
+
+  max-height: 45px;
+}
+
+.page-footer, .page-header {
+ /* background-color: #b6d2ca; */
+  background-color: rgb(112, 178, 178);
+
+}
+
+
+main {
+  flex: 1 0 auto;
+}
+ 
+.hidden
+{
+  display: none !important;
   }
 
-  .alertText {
-    color: red;
-  }
+.center
+{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card
+{
+  background-color: whitesmoke;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  display: inline-block;
+  border-radius: 5px;
+}
 
 
-  nav, nav .nav-wrapper i, nav a.sidenav-trigger, nav a.sidenav-trigger i {
-    background-color: rgba(51,51,51,0.08);
-    max-height: 45px;
+.fishCard {
+  max-width: 300px;
+  max-height: 300px;
+  padding: 5px;
+  display: inline-block;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  vertical-align: top;
+  border-radius: 5px;
+
+}
+
+
+.card {
+  border-radius: 5px;
+}
+/* used for setting images to "medium" size (restricted width, preserving ratio) */ 
+.medImg {
+  max-width: 200px;
+  max-height: auto;
   }
-  
-  .page-footer, .page-header {
-    background-color: #b6d2ca;
+
+  .listPane {
+    background-color: white;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 20px;
+    margin-top: 5px;
   }
-  main {
-    flex: 1 0 auto;
-  }
-   
-  .hidden
-  {
-    display: none !important;
+
+  /*keeps match elements on the same line and sets height*/
+  .matchRow {
+      height: 70px;
+      line-height: 70px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 5%; 
+      font-size:17px;
     }
-  
-  .center
-  {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .card
-  {
-    background-color: whitesmoke;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-bottom: 0px;
-    margin-top: 0px;
-    display: inline-block;
-    border-radius: 5px;
-  }
-  
 
-  .fishCard {
-    max-width: 300px;
-    max-height: 300px;
-    padding: 5px;
-    display: inline-block;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    vertical-align: top;
-    border-radius: 5px;
-
-  }
-
-  
-  .card {
-    border-radius: 5px;
-  }
-  /* used for setting images to "medium" size (restricted width, preserving ratio) */ 
-  .medImg {
-    max-width: 200px;
-    max-height: auto;
+    .underlay {
+      position: relative;
+      z-index: 0;
     }
-  
-    .listPane {
-      background-color: white;
-      padding-top: 15px;
-      padding-bottom: 10px;
-      padding-left: 30px;
-      padding-right: 30px;
-      margin-bottom: 20px;
-      margin-top: 5px;
-    }
-  
-    /*keeps match elements on the same line and sets height*/
-    .matchRow {
-        height: 70px;
-        line-height: 70px;
-        display: inline-block;
-        vertical-align: middle;
-        margin-left: 5%; 
-        font-size:17px;
-      }
+.overlay
+{
+margin-top:10px;
+margin-left:100px;
+min-height: 40px;
+min-width: 100px;
+vertical-align: middle;
+text-align: center;
+width: 200px;
+font-size: 0.8em;
+color: black;
+z-index: 1;
+background-color: rgb(252, 249, 208);
+opacity: var(--alertOpacity);
+/* opacity: 0; */
+position: absolute;
+}

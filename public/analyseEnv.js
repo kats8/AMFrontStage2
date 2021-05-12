@@ -2,9 +2,38 @@ let urlRemoteVR = 'https://us-south.functions.appdomain.cloud/api/v1/web/Katrina
 const urlClassify = '/classifyURL';
 const checkFishMatch = '/checkFishMatch';
 const qMark = 'assets/fishIcon.png';
+let socketId;
 
 $(document).ready(function () {
+  document.documentElement.style.setProperty('--alertOpacity', `0`)
+  $('#alertInfo').removeClass("hidden");
   console.log('Ready');
+
+  $.get('/socketid', function (res) {
+    socketId = res
+  });
+
+
+  var socketConnection = io.connect();
+  socketConnection.on('connect', function () {
+    // socket = socketConnection.socket.sessionid; //
+  });
+
+  //to display matches of other users
+  socketConnection.on('matchFound', match => {
+    //only display if not me
+    if (socketId != match.socket) {
+      let theString = `Someone just identified a ${match.fish}!`;
+      $('#alertInfo').html(theString);
+      console.log(theString);
+      console.log('socketId: '+socketId);
+      console.log('match.socket: '+match.socket);
+
+      document.documentElement.style.setProperty('--alertOpacity', `1`);
+      setTimeout(function(){ document.documentElement.style.setProperty('--alertOpacity', `0`); }, 4000);
+       
+    }
+  });
   $('#textInfo').addClass("hidden");
   $('#textInfo').html("");
 
@@ -33,7 +62,9 @@ $(document).ready(function () {
         $('#textInfo').html("We couldn't find a valid image at that URL");
         $('#urlPic').attr("src", qMark);
       }
-    }).then(result => $.get("/checkFishMatch", { body: result }, function (matchInfo) {
+  //  }).then(result => $.get("/checkFishMatch", { body: result }, function (matchInfo) {
+    }).then(result => $.get("/checkFishMatch", { body: result, socket: socketId }, function (matchInfo) {
+
       let matchData = jQuery.parseJSON(matchInfo);
       //If a fish match was returned, fill in info accordingly
       if (matchData.fishMatch) {
