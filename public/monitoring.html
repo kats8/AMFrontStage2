@@ -44,17 +44,14 @@
       </div>
 <br>
         <div class="input-field col-4 s4" style="width: 46%;margin: auto;">
-            <select class="browser-default" style="cursor:pointer;border: 1px solid rgb(84, 215, 224);outline: none;border-radius: 8px;">
+            <select id="dropmenu" class="browser-default" style="cursor:pointer;border: 1px solid rgb(84, 215, 224);outline: none;border-radius: 8px;">
               <option value="" disabled selected>Select Species</option>
-              <option value="dummy1">Dummy Specie 1</option>
-              <option value="dummy1">Dummy Specie 2</option>
-              <option value="dummy1">Dummy Specie 3</option>
             </select>
             
           </div>
 <br>
           <div class="input-field col-4 s4" style="width: 46%;margin: auto;text-align: center;">
-            <a class="waves-effect waves-light btn" style="background-color: rgb(3, 143, 143);">
+            <a class="waves-effect waves-light btn" style="background-color: rgb(3, 143, 143);" onclick="getFishLocation()">
                 <i class="material-icons left">search</i>Search</a>
           </div>
 
