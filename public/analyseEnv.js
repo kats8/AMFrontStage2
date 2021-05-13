@@ -16,7 +16,6 @@ $(document).ready(function () {
 
   var socketConnection = io.connect();
   socketConnection.on('connect', function () {
-    // socket = socketConnection.socket.sessionid; //
   });
 
   //to display matches of other users
