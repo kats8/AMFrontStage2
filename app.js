@@ -47,6 +47,8 @@ app.get('/checkFishMatch', function (request, response) {
   //access via cloud (PAAS)
   reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/checkFishMatch?body=" + JSON.stringify(inBody);
   req(reqObject, (err, result) => {
+
+    //if true match being returned in response, initiate alert via webserver
     try {
       let matchData = JSON.parse(result.body);
       let theSocket = request.query.socket;
