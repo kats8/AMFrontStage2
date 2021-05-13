@@ -2,6 +2,7 @@ const cors = require("cors");
 const req = require("request");
 const express = require("express");
 const bodyParser = require("body-parser");
+const https=require('https');
 const app = express();
 app.use(cors());
 let userSocket;
@@ -93,6 +94,46 @@ app.get("/classifyURL", function (request, response) {
     response.send(result.body);
   });
 });
+
+
+
+const getFishLocation = (resq)=>{
+  const https = require('https');
+  var str = '';
+
+  var options = {
+    hostname: 'amlocatapi.us-south.cf.appdomain.cloud',
+    port: 443,
+    path: '/location',
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': '1q2w3e4r5t6yu7i8'
+    }
+  };
+
+  callback =  function(response) {
+
+    response.on('data', function (chunk) {
+      str += chunk;
+    });
+  
+    response.on('end', function () {
+      //console.log(req.data);
+      //console.log(str);
+      resq.send(JSON.parse(str));
+      // your code here if you want to use the results !
+    });
+  }
+  
+  var req =  https.request(options, callback).end();
+}
+
+
+app.get("/getAll",function(req,resq){
+  getFishLocation(resq);
+})
+
 
 http.listen(port);
 console.log("Listening on port ", port);
