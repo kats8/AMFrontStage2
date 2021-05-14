@@ -28,14 +28,17 @@ fetch('/getAll').then(response => response.json())
 .catch(err => console.log(err));
 
 
-var coords=[{"lat":-33.871558,"lon":151.243445,"info":"Dummy Fish 1"},{"lat":-34.861812,"lon":154.2463330,"info":"Dummy Fish 2"}]
+//var coords=[{"lat":-33.871558,"lon":151.243445,"info":"Dummy Fish 1"},{"lat":-34.861812,"lon":154.2463330,"info":"Dummy Fish 2"}]
+var coords=[{"lat":-25,"lon":130,"info":"initialise on Australia"}]
 
-// initialize map
-map = L.map('mapDiv').setView(coords[0], 2);
+
+// initialize map and centre on Australia
+map = L.map('mapDiv').setView(coords[0], 3);
 
 // set map tiles source
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 16,
+  worldCopyJump: false
 }).addTo(map);
 
 var marker=[];
@@ -62,11 +65,10 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   for(var k=0;k<=allfishes.length;k++){
     if (selectedFishSpecie == allfishes[k].fish) {
         // console.log(allfishes[k]);
-        map.setView(fishcoords[k],1);
-        marker = L.marker(fishcoords[k]).addTo(map).bindPopup("Specie: "+allfishes[k].fish+", Lat: "+allfishes[k].lat+", Lng: "+allfishes[k].long);   
+       // map.setView(fishcoords[k],1);
+        marker = L.marker(fishcoords[k]).addTo(map).bindPopup("Species: "+allfishes[k].fish+", Lat: "+allfishes[k].lat+", Lng: "+allfishes[k].long);   
     }
   }
-  
 }
 
 //document ready function including socket functionalitiy for match alerts
