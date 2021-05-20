@@ -23,11 +23,12 @@
     
 </head>
 <header>
+  <div class="card overlay hidden" id="alertInfo"></div>
   <nav>
       <!--Navbar-->
-      <div class="nav-wrapper center">
+      <div class="nav-wrapper center underlay">
         <!-- Centre icon-->
-        <a href="#" class="brand-logo center"><img src="assets/fishIcon.png" id="centreIcon" alt=""
+        <a href="index.html" class="brand-logo center"><img src="assets/fishIcon.png" id="centreIcon" alt=""
                 style="max-height: 40px; padding-top: 2px; padding-bottom: 2px;"></a>
         <ul id="nav-mobile" class="right">
             <li><a href="index.html">Home</a></li>
@@ -39,26 +40,23 @@
 </header>
 <body>
     <main>
-      <div class="center">
+      <div class="center underlay">
         <p>Select a fish species to display where specimens have been located via Angler Mate</p>
       </div>
 <br>
         <div class="input-field col-4 s4" style="width: 46%;margin: auto;">
-            <select class="browser-default" style="cursor:pointer;border: 1px solid rgb(84, 215, 224);outline: none;border-radius: 8px;">
+            <select id="dropmenu" class="browser-default" style="cursor:pointer;border: 1px solid rgb(84, 215, 224);outline: none;border-radius: 8px;">
               <option value="" disabled selected>Select Species</option>
-              <option value="dummy1">Dummy Specie 1</option>
-              <option value="dummy1">Dummy Specie 2</option>
-              <option value="dummy1">Dummy Specie 3</option>
             </select>
             
           </div>
 <br>
           <div class="input-field col-4 s4" style="width: 46%;margin: auto;text-align: center;">
-            <a class="waves-effect waves-light btn" style="background-color: rgb(3, 143, 143);">
+            <a class="waves-effect waves-light btn" style="background-color: rgb(3, 143, 143);" onclick="getFishLocation()">
                 <i class="material-icons left">search</i>Search</a>
           </div>
 
-          <div id="mapDiv" style="width: 100%; height: 400px;margin:2px;top:10px"></div>
+          <div id="mapDiv" style="width: 100%; height: 400px;margin:2px;top:10px" class="center"></div>
        
     </main>
     <footer class="page-footer">
@@ -70,7 +68,8 @@
     </footer>
 
 
-
+    <!--needed for socket functionality-->
+    <script src="/socket.io/socket.io.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -19,9 +19,10 @@
 
 <body>
     <header>
+        <div class="card overlay hidden" id="alertInfo"></div>
         <nav>
             <!--Navbar-->
-            <div class="nav-wrapper center">
+            <div class="nav-wrapper center underlay">
                 <!-- Centre icon-->
                 <a href="#" class="brand-logo center"><img src="assets/fishIcon.png" id="centreIcon" alt=""
                         style="max-height: 40px; padding-top: 2px; padding-bottom: 2px;"></a>
@@ -37,7 +38,7 @@
 
 
         <!--The welcome screen shown to new users-->
-        <div class="container center" id="welcome">
+        <div class="container center underlay" id="welcome">
             <div class="center ">
                 <h4><b>Welcome to Angler Mate</b></h4>
                 <p><i>Angler Mate allows you <a href="analyse.html">match your fish photographs</a> against fish species for relevant regulations and advice.</i></p>
@@ -76,7 +77,8 @@
         </div>
     </footer>
 
-
+    <!--needed for socket functionality-->
+    <script src="/socket.io/socket.io.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

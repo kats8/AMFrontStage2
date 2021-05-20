@@ -1,20 +1,106 @@
-// position we will use later
-// var lat = 40.73;
-// var lon = -74.00;
-// var coords=[];
-var coords=[{"lat":-33.871558,"lon":151.243445,"info":"Dummy Fish 1"},{"lat":-34.861812,"lon":154.2463330,"info":"Dummy Fish 2"}]
+//used to store socket ID for this connection
+let socketId;
 
-// initialize map
-map = L.map('mapDiv').setView(coords[0], 5);
+var allfishes=[];
+var selectmenu=document.getElementById("dropmenu");
+var opt=[];
+fetch('/getAll').then(response => response.json())
+.then((json) => {
+
+  allfishes=json;
+  var fishes=[];
+  for(var i=0;i<allfishes.length;i++){
+    fishes.push(allfishes[i].fish);
+  }
+
+  var uniqueSet=new Set(fishes);// console.log(uniqueSet);
+  var uniqueFishes=Array.from(uniqueSet);// console.log(uniqueFishes);
+
+  for(var j=0;j<uniqueFishes.length;j++){
+    opt=document.createElement("option");
+    opt.innerHTML=uniqueFishes[j];
+    opt.value=uniqueFishes[j];
+    selectmenu.appendChild(opt);
+  }
+  
+  
+})
+.catch(err => console.log(err));
+
+
+//var coords=[{"lat":-33.871558,"lon":151.243445,"info":"Dummy Fish 1"},{"lat":-34.861812,"lon":154.2463330,"info":"Dummy Fish 2"}]
+var coords=[{"lat":-25,"lon":130,"info":"initialise on Australia"}]
+
+
+// initialize map and centre on Australia
+map = L.map('mapDiv').setView(coords[0], 3);
 
 // set map tiles source
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 16,
+  worldCopyJump: false
 }).addTo(map);
 
+var marker=[];
+function getFishLocation(){
+  
+  var selectedFishSpecie = $("#dropmenu").children("option:selected").val();
+  // console.log(selectedFishSpecie);
 
-// add marker to the map // and // add popup to the marker //uncomment that code for showing markers
-// for(i=0;i<coords.length;i++){
-//   marker = L.marker(coords[i]).addTo(map).bindPopup(coords[i].info);   
-// }
-// console.log(marker);
+var fishcoords=[];
+for(j=0;j<=allfishes.length-1;j++){
+  fishcoords.push({"lat":allfishes[j].lat,"lon":allfishes[j].long});
+  
+}
+map.eachLayer((layer) => {
+  layer.remove();
+});
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 16,
+}).addTo(map);
+
+// set map tiles source
+
+  for(var k=0;k<=allfishes.length;k++){
+    if (selectedFishSpecie == allfishes[k].fish) {
+        // console.log(allfishes[k]);
+       // map.setView(fishcoords[k],1);
+        marker = L.marker(fishcoords[k]).addTo(map).bindPopup("Species: "+allfishes[k].fish+", Lat: "+allfishes[k].lat+", Lng: "+allfishes[k].long);   
+    }
+  }
+}
+
+//document ready function including socket functionalitiy for match alerts
+$(document).ready(function () {
+  document.documentElement.style.setProperty('--alertOpacity', `0`)
+  $('#alertInfo').removeClass("hidden");
+  console.log('Ready');
+
+  $.get('/socketid', function (res) {
+    socketId = res
+  });
+
+
+  var socketConnection = io.connect();
+  socketConnection.on('connect', function () {
+  });
+
+  //to display matches of other users
+  socketConnection.on('matchFound', match => {
+
+    //only display if not me
+    if (socketId != match.socket) {
+      let theString = `Someone just identified a ${match.fish}!`;
+      $('#alertInfo').html(theString);
+      console.log(theString);
+      console.log('socketId: '+socketId);
+      console.log('match.socket: '+match.socket);
+
+      document.documentElement.style.setProperty('--alertOpacity', `1`);
+      setTimeout(function(){ document.documentElement.style.setProperty('--alertOpacity', `0`); }, 4000);
+       
+    }
+    
+  });
+})

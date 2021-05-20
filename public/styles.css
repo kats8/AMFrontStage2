@@ -116,19 +116,21 @@ main {
   }
 
   /*keeps match elements on the same line and sets height*/
-  .matchRow {
+.matchRow 
+{
       height: 70px;
       line-height: 70px;
       display: inline-block;
       vertical-align: middle;
       margin-left: 5%; 
       font-size:17px;
-    }
+}
 
-    .underlay {
+.underlay 
+{
       position: relative;
       z-index: 0;
-    }
+}
 .overlay
 {
 margin-top:10px;
@@ -145,4 +147,5 @@ background-color: rgb(252, 249, 208);
 opacity: var(--alertOpacity);
 /* opacity: 0; */
 position: absolute;
+border-radius: 5px;
 }

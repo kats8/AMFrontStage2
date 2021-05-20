@@ -1,14 +1,8 @@
 const cors = require("cors");
 const req = require("request");
 const express = require("express");
-<<<<<<< HEAD
-//const bodyParser = require("body-parser");
-//url for cloud function (accesses 3rd party VR services)
-const urlRemoteVR = 'https://us-south.functions.appdomain.cloud/api/v1/web/Katrina.Steen%40gmail.com_dev/default/AM%20Fish%20Analysis'
-
-=======
 const bodyParser = require("body-parser");
->>>>>>> f371b8917291b2420963da3379413787e06146aa
+const https=require('https');
 const app = express();
 app.use(cors());
 let userSocket;
@@ -54,6 +48,8 @@ app.get('/checkFishMatch', function (request, response) {
   //access via cloud (PAAS)
   reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/checkFishMatch?body=" + JSON.stringify(inBody);
   req(reqObject, (err, result) => {
+
+    //if true match being returned in response, initiate alert via webserver
     try {
       let matchData = JSON.parse(result.body);
       let theSocket = request.query.socket;
@@ -98,6 +94,46 @@ app.get("/classifyURL", function (request, response) {
     response.send(result.body);
   });
 });
+
+
+
+const getFishLocation = (resq)=>{
+  const https = require('https');
+  var str = '';
+
+  var options = {
+    hostname: 'amlocatapi.us-south.cf.appdomain.cloud',
+    port: 443,
+    path: '/location',
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': '1q2w3e4r5t6yu7i8'
+    }
+  };
+
+  callback =  function(response) {
+
+    response.on('data', function (chunk) {
+      str += chunk;
+    });
+  
+    response.on('end', function () {
+      //console.log(req.data);
+      //console.log(str);
+      resq.send(JSON.parse(str));
+      // your code here if you want to use the results !
+    });
+  }
+  
+  var req =  https.request(options, callback).end();
+}
+
+
+app.get("/getAll",function(req,resq){
+  getFishLocation(resq);
+})
+
 
 http.listen(port);
 console.log("Listening on port ", port);
