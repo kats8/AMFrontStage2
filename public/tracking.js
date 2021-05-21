@@ -65,7 +65,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   for(var k=0;k<=allfishes.length;k++){
     if (selectedFishSpecie == allfishes[k].fish) {
         // console.log(allfishes[k]);
-       // map.setView(fishcoords[k],1);
+       map.setView(fishcoords[k],8);
         marker = L.marker(fishcoords[k]).addTo(map).bindPopup("Species: "+allfishes[k].fish+", Lat: "+allfishes[k].lat+", Lng: "+allfishes[k].long);   
     }
   }
