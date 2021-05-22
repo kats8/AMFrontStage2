@@ -149,3 +149,11 @@ opacity: var(--alertOpacity);
 position: absolute;
 border-radius: 5px;
 }
+
+.buttons{
+  padding: 20px !important;
+}
+
+#homeBtn{
+  background-color: #634bff;
+}
