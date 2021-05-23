@@ -3,6 +3,7 @@ const urlClassify = '/classifyURL';
 const checkFishMatch = '/checkFishMatch';
 const qMark = 'assets/fishIcon.png';
 let socketId;
+let position;
 
 $(document).ready(function () {
   document.documentElement.style.setProperty('--alertOpacity', `0`)
@@ -12,6 +13,15 @@ $(document).ready(function () {
   $.get('/socketid', function (res) {
     socketId = res
   });
+
+ position = getPreciseLocation()
+    .then((result) => {
+      const loc = {location: result}
+        position = result;
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 
 
   var socketConnection = io.connect();
@@ -44,7 +54,7 @@ $(document).ready(function () {
     $('#textInfo').html("Please Wait...");
     $('#urlPic').attr("src", qMark);
 
-    let input = {
+     let input = {
       url: inputURL
     }
     let textString = "";
@@ -62,7 +72,7 @@ $(document).ready(function () {
         $('#urlPic').attr("src", qMark);
       }
   //  }).then(result => $.get("/checkFishMatch", { body: result }, function (matchInfo) {
-    }).then(result => $.get("/checkFishMatch", { body: result, socket: socketId }, function (matchInfo) {
+    }).then(result => $.get("/checkFishMatch", { body: [result,position], socket: socketId, place:position }, function (matchInfo) {
 
       let matchData = jQuery.parseJSON(matchInfo);
       //If a fish match was returned, fill in info accordingly
@@ -94,5 +104,12 @@ $(document).ready(function () {
       $('#urlPic').attr("src", qMark);
     });
   })
+async function getPreciseLocation() {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      resolve({lat:position.coords.latitude, long:position.coords.longitude});
+    });
+  });
+}
 })
 
