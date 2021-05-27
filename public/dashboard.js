@@ -43,11 +43,15 @@ $(document).ready(function () {
     
     socketConnection.on('socketChange', onlineUsers => {
       //can program actions in here for what is to happen when the online users change (eg, redraw of map using new cooardinates)
-
       //onlineUsers contains the updated array of lat/long coordinates ([lat: xx, long: xx, info: xx])
       onlineUserArray = onlineUsers;
       console.log(onlineUserArray);
-      //program map redraw here??
+      //PROGRAM MAP REDRAW, ETC ACTIONS HERE
+      //
+      //
+      //
+      //
+      
     });
 
   })
