@@ -36,24 +36,25 @@ $(document).ready(function () {
   });
 
 
+  socketConnection.on('socketChange', onlineUsers => {
+    //can program actions in here for what is to happen when the online users change (eg, redraw of map using new cooardinates)
+    //onlineUsers contains the updated array of lat/long coordinates ([lat: xx, long: xx, info: xx])
+    onlineUserArray = onlineUsers;
+    console.log(onlineUserArray);
+    //PROGRAM MAP REDRAW, ETC ACTIONS HERE
+    //
+    //
+    //
+    //
+    
+  });
+
+
   //Use this to get array of current online users (eg, for initial map)
   $.get('/getSocketArray', function (res) {
     onlineUserArray = res.array;
     drawInitialMap(onlineUserArray);
     
-    socketConnection.on('socketChange', onlineUsers => {
-      //can program actions in here for what is to happen when the online users change (eg, redraw of map using new cooardinates)
-      //onlineUsers contains the updated array of lat/long coordinates ([lat: xx, long: xx, info: xx])
-      onlineUserArray = onlineUsers;
-      console.log(onlineUserArray);
-      //PROGRAM MAP REDRAW, ETC ACTIONS HERE
-      //
-      //
-      //
-      //
-      
-    });
-
   })
 
 })

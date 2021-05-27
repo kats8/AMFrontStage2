@@ -74,6 +74,7 @@ app.get("/displayHello", function (request, response) {
 
 app.get('/getSocketArray', function (req, res){
   res.send({array: onlineUsers});
+  io.emit('socketChange', onlineUsers);
 });
 
 //endpoint to give client their socketId
