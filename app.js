@@ -2,29 +2,68 @@ const cors = require("cors");
 const req = require("request");
 const express = require("express");
 const bodyParser = require("body-parser");
-const https=require('https');
+const https = require('https');
 const app = express();
 app.use(cors());
 let userSocket;
+let onlineUsers = [];
 
 //required for sockets
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+//to ensure timely tracking of disconnections
 
 var port = process.env.PORT || 8088;
 
 app.use(express.static(__dirname + '/public'));
 
+//to detect disonnected sockets via refresh or page navigation 
+//io.eio.pingTimeout = 10000; // 10 seconds
+//io.eio.pingInterval = 3000;  // 3 seconds
 
 io.on('connection', (socket) => {
+  console.log('user connected');
   //keep track of socket, as users don’t need updates on own matches
   userSocket = socket.id
-  console.log('user connected');
-
   socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
+    console.log('user disconnected from ' + socket.id);
+    /*
+    onlineUsers.forEach((user) => {
+      if (user.socket == socket.id) {
+       //remove that user from array
+       console.log("we think the socket leaving is "+user.socket);
+      }
+    }); */
+    for (var i = 0; i < onlineUsers.length; i++) {
 
+      if (onlineUsers[i].socket === socket.id) {
+        console.log('got here '+onlineUsers[i].socket);
+        onlineUsers.splice(i, 1);
+        i--;
+      }
+    }
+    console.log(onlineUsers);
+    io.emit('socketChange', onlineUsers);
+  });
+  socket.on('close', () => {
+    console.log('user closed from ' + socket.id);
+    /*
+    onlineUsers.forEach((user) => {
+      if (user.socket == socket.id) {
+       //remove that user from array
+       console.log("we think the socket leaving is "+user.socket);
+      }
+    }); 
+    for (var i = 0; i < onlineUsers.length; i++) {
+
+      if (onlineUsers[i].socket === socket.id) {
+        console.log('got here '+onlineUsers[i].socket);
+        onlineUsers.splice(i, 1);
+        i--;
+      }
+    }*/
+    console.log('got to close: '+onlineUsers);
+  });
 });
 
 //basic test to check functioning
@@ -33,15 +72,36 @@ app.get("/displayHello", function (request, response) {
   response.json("Hello " + user_name + "!");
 });
 
+app.get('/getSocketArray', function (req, res){
+  res.send({array: onlineUsers});
+});
+
 //endpoint to give client their socketId
 app.get('/socketid', function (req, res) {
+  //will add user to server list using socket and location and advise user of their socketID
+
+  //will also take location via request this is implemented
+  //let userLat = req.lat;
+  //let userLong = req.long;
+  //dummy data for now
+  let userLat = -26 + (Math.random()*7);
+  let userLong = 150 + (Math.random()*2);
+
+  let newUser =
+  {
+    lat: userLat,
+    lon: userLong,
+    info: userSocket
+  }
+  onlineUsers.push(newUser);
+  console.log(onlineUsers);
   res.send(userSocket)
 });
 
 //get request - forwarding API to check if there's an image match for a fish in the database and returns details
 app.get('/checkFishMatch', function (request, response) {
   let inBody = request.query.body;
- // let theSocket = userSocket;
+  // let theSocket = userSocket;
   //link for local testing (http://localhost:8081/) ------
   //reqObject = "http://localhost:8081/checkFishMatch?body=" + JSON.stringify(inBody);
   //----------
@@ -97,7 +157,7 @@ app.get("/classifyURL", function (request, response) {
 
 
 
-const getFishLocation = (resq)=>{
+const getFishLocation = (resq) => {
   const https = require('https');
   var str = '';
 
@@ -112,12 +172,12 @@ const getFishLocation = (resq)=>{
     }
   };
 
-  callback =  function(response) {
+  callback = function (response) {
 
     response.on('data', function (chunk) {
       str += chunk;
     });
-  
+
     response.on('end', function () {
       //console.log(req.data);
       //console.log(str);
@@ -125,12 +185,12 @@ const getFishLocation = (resq)=>{
       // your code here if you want to use the results !
     });
   }
-  
-  var req =  https.request(options, callback).end();
+
+  var req = https.request(options, callback).end();
 }
 
 
-app.get("/getAll",function(req,resq){
+app.get("/getAll", function (req, resq) {
   getFishLocation(resq);
 })
 
