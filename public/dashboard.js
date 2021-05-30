@@ -41,20 +41,22 @@ $(document).ready(function () {
     //onlineUsers contains the updated array of lat/long coordinates ([lat: xx, long: xx, info: xx])
     onlineUserArray = onlineUsers;
     console.log(onlineUserArray);
+
     //PROGRAM MAP REDRAW, ETC ACTIONS HERE
     //
     //
     //
     //
-    
+    map.remove();
+    drawInitialMap(onlineUserArray);    
   });
 
 
   //Use this to get array of current online users (eg, for initial map)
   $.get('/getSocketArray', function (res) {
     onlineUserArray = res.array;
+    console.log(onlineUserArray);
     drawInitialMap(onlineUserArray);
-    
   })
 
 })
@@ -69,11 +71,10 @@ function drawInitialMap(coords) {
       {"lat":-29,"lon":132,"info":"Dummy User 4"}
   ]*/
 
-
   // initialize map with Dummy user locations
   map = L.map('mapDiv').setView(coords[0], 3);
 
-
+  
   map.eachLayer((layer) => {
     layer.remove();
   });
