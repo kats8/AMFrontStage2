@@ -88,10 +88,10 @@ app.get('/checkFishMatch', function (request, response) {
   let pLong = null;
   // let theSocket = userSocket;
   //link for local testing (http://localhost:8081/) ------
-  reqObject = "http://localhost:8081/checkFishMatch?body=" + JSON.stringify(inBody);
+ // reqObject = "http://localhost:8081/checkFishMatch?body=" + JSON.stringify(inBody);
   //----------
   //access via cloud (PAAS)
-  //reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/checkFishMatch?body=" + JSON.stringify(inBody);
+  reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/checkFishMatch?body=" + JSON.stringify(inBody);
   req(reqObject, (err, result) => {
 
     //if true match being returned in response, initiate alert via webserver
@@ -137,12 +137,11 @@ app.get("/classifyURL", function (request, response) {
   console.log(request.query)
 
   //--------------
-  //******* */
   //(for shortcut straight to cloud FAAS (testing): reqObject = urlRemoteVR+"?url="+imageURL;
-  //local testing via local machine: reqObject = "http://localhost:8081/classifyURL?url="+imageURL+ "?lat="+lat+"?long="+long;
-  reqObject = "http://localhost:8081/classifyURL?url="+imageURL+ "&lat="+lat+"&long="+long;
+  //local testing via local machine: reqObject = "http://localhost:8081/classifyURL?url="+imageURL+ "&lat="+lat+"&long="+long;
+  //reqObject = "http://localhost:8081/classifyURL?url="+imageURL+ "&lat="+lat+"&long="+long;
   //-------------
-  //reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/classifyURL?url=" + imageURL+ "?lat="+lat+"?long="+long;
+  reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/classifyURL?url="+imageURL+ "&lat="+lat+"&long="+long;
 
   req(reqObject, (err, result) => {
     if (err) { return console.log(err); }
@@ -150,8 +149,6 @@ app.get("/classifyURL", function (request, response) {
     response.send(result.body);
   });
 });
-
-
 
 const getFishLocation = (resq) => {
   const https = require('https');
