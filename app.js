@@ -47,21 +47,6 @@ io.on('connection', (socket) => {
   });
   socket.on('close', () => {
     console.log('user closed from ' + socket.id);
-    /*
-    onlineUsers.forEach((user) => {
-      if (user.socket == socket.id) {
-       //remove that user from array
-       console.log("we think the socket leaving is "+user.socket);
-      }
-    }); 
-    for (var i = 0; i < onlineUsers.length; i++) {
-
-      if (onlineUsers[i].socket === socket.id) {
-        console.log('got here '+onlineUsers[i].socket);
-        onlineUsers.splice(i, 1);
-        i--;
-      }
-    }*/
     console.log('got to close: ' + onlineUsers);
   });
 });
@@ -80,10 +65,6 @@ app.get('/getSocketArray', function (req, res) {
 //endpoint to give client their socketId
 app.get('/socketid', function (req, res) {
   //will add user to server list using socket and location and advise user of their socketID
-
-  //dummy data for now
-  //let userLat = -26 + (Math.random() * 7);
-  //let userLong = 150 + (Math.random() * 2);
   let userLat = req.query.lat;
   let userLong = req.query.long;
   userInfo = req.query.user;
@@ -92,7 +73,6 @@ app.get('/socketid', function (req, res) {
   {
     lat: userLat,
     lon: userLong,
-   // info: userInfo
     info: userSocket,
     user: userInfo
   }
