@@ -1,6 +1,7 @@
 let socketId;
 let onlineUserArray = [];
 let coords = [];
+let position;
 
 //document ready function including socket functionalitiy for match alerts
 $(document).ready(function () {
@@ -8,9 +9,34 @@ $(document).ready(function () {
   $('#alertInfo').removeClass("hidden");
   console.log('Ready');
 
-  $.get('/socketid', function (res) {
-    socketId = res;
-  });
+/*
+    $.get('/socketid', input, function (res) {
+      socketId = res
+    });
+  
+    */
+
+    position = getPreciseLocation()
+    .then((result) => {
+      const loc = { location: result }
+      position = result;
+      let input = {
+        lat: position.lat,
+        long: position.long,
+        user: 'Monitoring Users'
+
+      }
+      $.get('/socketid', input, function (res) {
+        socketId = res
+      });
+    
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+
+
 
 
   var socketConnection = io.connect();
@@ -32,9 +58,7 @@ $(document).ready(function () {
       setTimeout(function () { document.documentElement.style.setProperty('--alertOpacity', `0`); }, 4000);
 
     }
-
   });
-
 
   socketConnection.on('socketChange', onlineUsers => {
     //can program actions in here for what is to happen when the online users change (eg, redraw of map using new cooardinates)
@@ -87,6 +111,14 @@ function drawInitialMap(coords) {
 
   for (var k = 0; k <= coords.length; k++) {
     map.setView(coords[k], 4);
-    marker = L.marker(coords[k]).addTo(map).bindPopup("User: " + coords[k].info);
+    marker = L.marker(coords[k]).addTo(map).bindPopup("User: " + coords[k].user);
   }
+}
+
+async function getPreciseLocation() {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      resolve({ lat: position.coords.latitude, long: position.coords.longitude });
+    });
+  });
 }

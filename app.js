@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
     for (var i = 0; i < onlineUsers.length; i++) {
 
       if (onlineUsers[i].socket === socket.id) {
-        console.log('got here '+onlineUsers[i].socket);
+        console.log('got here ' + onlineUsers[i].socket);
         onlineUsers.splice(i, 1);
         i--;
       }
@@ -62,7 +62,7 @@ io.on('connection', (socket) => {
         i--;
       }
     }*/
-    console.log('got to close: '+onlineUsers);
+    console.log('got to close: ' + onlineUsers);
   });
 });
 
@@ -72,8 +72,8 @@ app.get("/displayHello", function (request, response) {
   response.json("Hello " + user_name + "!");
 });
 
-app.get('/getSocketArray', function (req, res){
-  res.send({array: onlineUsers});
+app.get('/getSocketArray', function (req, res) {
+  res.send({ array: onlineUsers });
   io.emit('socketChange', onlineUsers);
 });
 
@@ -81,18 +81,20 @@ app.get('/getSocketArray', function (req, res){
 app.get('/socketid', function (req, res) {
   //will add user to server list using socket and location and advise user of their socketID
 
-  //will also take location via request this is implemented
-  //let userLat = req.lat;
-  //let userLong = req.long;
   //dummy data for now
-  let userLat = -26 + (Math.random()*7);
-  let userLong = 150 + (Math.random()*2);
+  //let userLat = -26 + (Math.random() * 7);
+  //let userLong = 150 + (Math.random() * 2);
+  let userLat = req.query.lat;
+  let userLong = req.query.long;
+  userInfo = req.query.user;
 
   let newUser =
   {
     lat: userLat,
     lon: userLong,
-    info: userSocket
+   // info: userInfo
+    info: userSocket,
+    user: userInfo
   }
   onlineUsers.push(newUser);
   console.log(onlineUsers);
@@ -102,24 +104,30 @@ app.get('/socketid', function (req, res) {
 //get request - forwarding API to check if there's an image match for a fish in the database and returns details
 app.get('/checkFishMatch', function (request, response) {
   let inBody = request.query.body;
+  let pLat = null;
+  let pLong = null;
   // let theSocket = userSocket;
   //link for local testing (http://localhost:8081/) ------
-  //reqObject = "http://localhost:8081/checkFishMatch?body=" + JSON.stringify(inBody);
+  reqObject = "http://localhost:8081/checkFishMatch?body=" + JSON.stringify(inBody);
   //----------
   //access via cloud (PAAS)
-  reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/checkFishMatch?body=" + JSON.stringify(inBody);
+  //reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/checkFishMatch?body=" + JSON.stringify(inBody);
   req(reqObject, (err, result) => {
 
     //if true match being returned in response, initiate alert via webserver
     try {
       let matchData = JSON.parse(result.body);
       let theSocket = request.query.socket;
+      pLat = request.query.place.lat;
+      pLong = request.query.place.long;
+
+      console.log(request.query);
 
       if (matchData.fishMatch) {
         const match = {
           fish: matchData.fish,
-          lat: null,
-          long: null,
+          lat: pLat,
+          long: pLong,
           socket: theSocket
         }
         io.emit('matchFound', match);
@@ -141,13 +149,20 @@ app.get('/checkFishMatch', function (request, response) {
 //get request - forwarding API for checking fish against database and returning details
 app.get("/classifyURL", function (request, response) {
   let imageURL = request.query.url;
+  let lat = request.query.lat;
+  let long = request.query.long;
+ // let lat = 25;
+  //let long = 150;
   console.log(imageURL)
+  console.log(request.query)
+
   //--------------
+  //******* */
   //(for shortcut straight to cloud FAAS (testing): reqObject = urlRemoteVR+"?url="+imageURL;
-  //local testing via local machine: reqObject = "http://localhost:8081/classifyURL?url="+imageURL;
-  //reqObject = "http://localhost:8081/classifyURL?url="+imageURL;
+  //local testing via local machine: reqObject = "http://localhost:8081/classifyURL?url="+imageURL+ "?lat="+lat+"?long="+long;
+  reqObject = "http://localhost:8081/classifyURL?url="+imageURL+ "&lat="+lat+"&long="+long;
   //-------------
-  reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/classifyURL?url=" + imageURL;
+  //reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/classifyURL?url=" + imageURL+ "?lat="+lat+"?long="+long;
 
   req(reqObject, (err, result) => {
     if (err) { return console.log(err); }

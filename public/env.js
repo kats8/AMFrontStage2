@@ -1,13 +1,39 @@
 let socketId;
+let position;
+
 
 $(document).ready(function () {
   document.documentElement.style.setProperty('--alertOpacity', `0`)
   $('#alertInfo').removeClass("hidden");
   console.log('Ready');
 
-  $.get('/socketid', function (res) {
-    socketId = res
-  });
+/*
+    $.get('/socketid', input, function (res) {
+      socketId = res
+    });
+  
+    */
+
+    position = getPreciseLocation()
+    .then((result) => {
+      const loc = { location: result }
+      position = result;
+      let input = {
+        lat: position.lat,
+        long: position.long,
+        user: 'Online'
+
+      }
+      $.get('/socketid', input, function (res) {
+        socketId = res
+      });
+    
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+
 
 
   var socketConnection = io.connect();
@@ -32,3 +58,11 @@ $(document).ready(function () {
     
   });
 })
+
+async function getPreciseLocation() {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      resolve({ lat: position.coords.latitude, long: position.coords.longitude });
+    });
+  });
+}

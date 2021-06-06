@@ -9,19 +9,31 @@ $(document).ready(function () {
   document.documentElement.style.setProperty('--alertOpacity', `0`)
   $('#alertInfo').removeClass("hidden");
   console.log('Ready');
+/*
+    $.get('/socketid', input, function (res) {
+      socketId = res
+    });
+  
+    */
 
-  $.get('/socketid', function (res) {
-    socketId = res
-  });
-
- position = getPreciseLocation()
+  position = getPreciseLocation()
     .then((result) => {
-      const loc = {location: result}
-        position = result;
+      const loc = { location: result }
+      position = result;
+      let input = {
+        lat: position.lat,
+        long: position.long,
+        user: 'Fishing'
+      }
+      $.get('/socketid', input, function (res) {
+        socketId = res
+      });
+    
     })
     .catch((error) => {
-        console.log(error);
+      console.log(error);
     });
+
 
 
   var socketConnection = io.connect();
@@ -35,12 +47,12 @@ $(document).ready(function () {
       let theString = `Someone just identified a ${match.fish}!`;
       $('#alertInfo').html(theString);
       console.log(theString);
-      console.log('socketId: '+socketId);
-      console.log('match.socket: '+match.socket);
+      console.log('socketId: ' + socketId);
+      console.log('match.socket: ' + match.socket);
 
       document.documentElement.style.setProperty('--alertOpacity', `1`);
-      setTimeout(function(){ document.documentElement.style.setProperty('--alertOpacity', `0`); }, 4000);
-       
+      setTimeout(function () { document.documentElement.style.setProperty('--alertOpacity', `0`); }, 4000);
+
     }
   });
   $('#textInfo').addClass("hidden");
@@ -54,8 +66,10 @@ $(document).ready(function () {
     $('#textInfo').html("Please Wait...");
     $('#urlPic').attr("src", qMark);
 
-     let input = {
-      url: inputURL
+    let input = {
+      url: inputURL,
+      lat: position.lat,
+      long: position.long
     }
     let textString = "";
     let classFound = "";
@@ -71,8 +85,9 @@ $(document).ready(function () {
         $('#textInfo').html("We couldn't find a valid image at that URL");
         $('#urlPic').attr("src", qMark);
       }
-  //  }).then(result => $.get("/checkFishMatch", { body: result }, function (matchInfo) {
-    }).then(result => $.get("/checkFishMatch", { body: [result,position], socket: socketId, place:position }, function (matchInfo) {
+      //  }).then(result => $.get("/checkFishMatch", { body: result }, function (matchInfo) {
+//    }).then(result => $.get("/checkFishMatch", { body: [result, position], socket: socketId, place: position }, function (matchInfo) {
+    }).then(result => $.get("/checkFishMatch", { body: result, socket: socketId, place: position }, function (matchInfo) {
 
       let matchData = jQuery.parseJSON(matchInfo);
       //If a fish match was returned, fill in info accordingly
@@ -104,12 +119,34 @@ $(document).ready(function () {
       $('#urlPic').attr("src", qMark);
     });
   })
-async function getPreciseLocation() {
-  return new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      resolve({lat:position.coords.latitude, long:position.coords.longitude});
+  async function getPreciseLocation() {
+    return new Promise(function (resolve, reject) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        resolve({ lat: position.coords.latitude, long: position.coords.longitude });
+      });
+    });
+  }
+
+  $('#upload').click(function () {
+
+    console.log('attempting to upload file')
+    var fd = new FormData();
+    fd.append('fishPic', $('#fishPic')[0].files[0]);
+
+    $.ajax({
+     // url: 'upload/uploadImage',
+      url: 'http://localhost:8001/api/upload/uploadImage',
+      data: fd,
+      processData: false,
+      contentType: false,
+      type: 'POST',
+      success: function (data) {
+        console.log('upload success!')
+        $('#data').empty();
+        $('#data').append(data);
+      }
     });
   });
-}
+
 })
 

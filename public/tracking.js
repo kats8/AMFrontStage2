@@ -1,5 +1,7 @@
 //used to store socket ID for this connection
 let socketId;
+let position;
+
 
 var allfishes=[];
 var selectmenu=document.getElementById("dropmenu");
@@ -78,9 +80,32 @@ $(document).ready(function () {
   $('#alertInfo').removeClass("hidden");
   console.log('Ready');
 
-  $.get('/socketid', function (res) {
-    socketId = res
-  });
+/*
+    $.get('/socketid', input, function (res) {
+      socketId = res
+    });
+  
+    */
+
+    position = getPreciseLocation()
+    .then((result) => {
+      const loc = { location: result }
+      position = result;
+      let input = {
+        lat: position.lat,
+        long: position.long,
+        user: 'Monitoring Species'
+
+      }
+      $.get('/socketid', input, function (res) {
+        socketId = res
+      });
+    
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
 
 
   var socketConnection = io.connect();
@@ -105,3 +130,11 @@ $(document).ready(function () {
     
   });
 })
+
+async function getPreciseLocation() {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      resolve({ lat: position.coords.latitude, long: position.coords.longitude });
+    });
+  });
+}
