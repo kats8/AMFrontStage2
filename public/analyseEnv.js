@@ -54,13 +54,26 @@ $(document).ready(function () {
   });
   $('#textInfo').addClass("hidden");
   $('#textInfo').html("");
+  $('#loadStatus').html("");
 
   //Code to upload file once chosen (from browse navigation) ready for matching and clear URL field
   document.getElementById("fishPic").onchange = function () {
     document.getElementById("uploadForm").submit();
     //clear URL box (make clear to user now image is uploaded, any previously entered URL value won't be used for match)
     $('#urlBox').val("");
+    $('#loadStatus').html("...loading");
   };
+
+
+
+    document.getElementById('dummyTarget').onload = function() {
+      content = document.getElementById('dummyTarget').contentWindow.document.body.innerHTML
+
+      //if has loaded with response, change status to reflect file is loaded
+      if (content.length>0){
+          $('#loadStatus').html("loaded");
+      }
+  }
 
 
   $('#btnClear').click(() => {
@@ -68,7 +81,9 @@ $(document).ready(function () {
     document.getElementById("uploadForm").reset();
     document.getElementById('dummyTarget').contentWindow.document.body.innerHTML ="";
     $('#urlBox').val("");
+    $('#loadStatus').html("");
   })
+
 
   $('#btnClassify').click(() => {
     let imageResult;
@@ -133,11 +148,13 @@ $(document).ready(function () {
       //ensure form ready for new file upload and old file URL cleared
       document.getElementById("uploadForm").reset();
       document.getElementById('dummyTarget').contentWindow.document.body.innerHTML = "";
+      $('#loadStatus').html("");
     })).catch(function () {
       $('#textInfo').html("We couldn't find a valid image at that location.");
       $('#urlPic').attr("src", qMark);
       document.getElementById("uploadForm").reset();
       document.getElementById('dummyTarget').contentWindow.document.body.innerHTML = "";
+      $('#loadStatus').html("");
     });
   })
   async function getPreciseLocation() {

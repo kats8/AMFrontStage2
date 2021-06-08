@@ -12,6 +12,14 @@
     margin-top: 5px;
 }
 
+#loadStatus {
+  color: grey;
+  width: 50px;
+  float: right;
+  font-size: 0.8em;
+
+}
+
 .tiny
 {
   font-size: 0.5em;
