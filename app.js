@@ -69,7 +69,8 @@ app.use(express.static(__dirname + '/public'));
 io.on('connection', (socket) => {
   console.log('user connected');
   //keep track of socket, as users don’t need updates on own matches
-  userSocket = socket.id
+  userSocket = socket.id;
+  console.log('user connected on: '+userSocket)
   socket.on('disconnect', () => {
     console.log('user disconnected from ' + socket.id);
     /*
@@ -82,13 +83,14 @@ io.on('connection', (socket) => {
     for (var i = 0; i < onlineUsers.length; i++) {
 
       if (onlineUsers[i].socket === socket.id) {
-        console.log('got here ' + onlineUsers[i].socket);
+        console.log('Removed ' + onlineUsers[i].socket);
         onlineUsers.splice(i, 1);
         i--;
       }
     }
     console.log(onlineUsers);
     io.emit('socketChange', onlineUsers);
+    console.log('broadcast change '+onlineUsers);
   });
   socket.on('close', () => {
     console.log('user closed from ' + socket.id);
@@ -104,7 +106,6 @@ app.get("/displayHello", function (request, response) {
 
 app.get('/getSocketArray', function (req, res) {
   res.send({ array: onlineUsers });
-  io.emit('socketChange', onlineUsers);
 });
 
 //endpoint to give client their socketId
@@ -118,12 +119,14 @@ app.get('/socketid', function (req, res) {
   {
     lat: userLat,
     lon: userLong,
-    info: userSocket,
+    socket: userSocket,
     user: userInfo
   }
   onlineUsers.push(newUser);
   console.log(onlineUsers);
-  res.send(userSocket)
+  res.send(userSocket);
+  io.emit('socketChange', onlineUsers);
+  console.log('broadcast change '+onlineUsers);
 });
 
 //get request - forwarding API to check if there's an image match for a fish in the database and returns details

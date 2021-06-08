@@ -2,6 +2,7 @@ let socketId;
 let onlineUserArray = [];
 let coords = [];
 let position;
+let initialCoord;
 
 //document ready function including socket functionalitiy for match alerts
 $(document).ready(function () {
@@ -9,12 +10,9 @@ $(document).ready(function () {
   $('#alertInfo').removeClass("hidden");
   console.log('Ready');
 
-/*
-    $.get('/socketid', input, function (res) {
-      socketId = res
-    });
-  
-    */
+initialCoord =     {"lat":-25,"lon":130,"info":"Dummy User 1"},
+// initialize map with Dummy user location
+map = L.map('mapDiv').setView(initialCoord, 3);
 
     position = getPreciseLocation()
     .then((result) => {
@@ -34,10 +32,6 @@ $(document).ready(function () {
     .catch((error) => {
       console.log(error);
     });
-
-
-
-
 
   var socketConnection = io.connect();
   socketConnection.on('connect', function () {
@@ -67,11 +61,7 @@ $(document).ready(function () {
     console.log(onlineUserArray);
 
     //PROGRAM MAP REDRAW, ETC ACTIONS HERE
-    //
-    //
-    //
-    //
-    map.remove();
+    //map.remove();
     drawInitialMap(onlineUserArray);    
   });
 
@@ -83,37 +73,25 @@ $(document).ready(function () {
     drawInitialMap(onlineUserArray);
   })
 
-})
-
-function drawInitialMap(coords) {
-  /*
-  var coords=
-  [
-      {"lat":-25,"lon":130,"info":"Dummy User 1"},
-      {"lat":-27,"lon":132,"info":"Dummy User 2"},
-      {"lat":-24,"lon":127,"info":"Dummy User 3"},
-      {"lat":-29,"lon":132,"info":"Dummy User 4"}
-  ]*/
-
-  // initialize map with Dummy user locations
-  map = L.map('mapDiv').setView(coords[0], 3);
-
+  function drawInitialMap(coords) {
+   
+    map.eachLayer((layer) => {
+      layer.remove();
+    });
   
-  map.eachLayer((layer) => {
-    layer.remove();
-  });
-
-  // set map tiles source
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 16,
-    worldCopyJump: false
-  }).addTo(map);
-
-  for (var k = 0; k <= coords.length; k++) {
-    map.setView(coords[k], 4);
-    marker = L.marker(coords[k]).addTo(map).bindPopup("User: " + coords[k].user);
+    // set map tiles source
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 16,
+      worldCopyJump: false
+    }).addTo(map);
+  
+    for (var k = 0; k <= coords.length; k++) {
+      map.setView(coords[k], 4);
+      marker = L.marker(coords[k]).addTo(map).bindPopup("User: " + coords[k].user);
+    }
   }
-}
+
+})
 
 async function getPreciseLocation() {
   return new Promise(function (resolve, reject) {
