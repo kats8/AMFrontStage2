@@ -26,7 +26,7 @@
                 <!-- Centre icon-->
                 <a href="#" class="brand-logo center"><img src="assets/fishIcon.png" id="centreIcon" alt=""
                         style="max-height: 40px; padding-top: 2px; padding-bottom: 2px;"></a>
-          
+
             </div>
         </nav>
     </header>
@@ -36,18 +36,23 @@
         <!--The welcome screen shown to new users-->
         <div class="container center underlay" id="welcome">
             <div class="center ">
-                <h4><b>Welcome to Angler Mate</b></h4>
-                <p><i>Angler Mate allows you <a href="analyse.html">match your fish photographs</a> against fish species for relevant regulations and advice.</i></p>
-                <p><i>Users can also <a href="monitoring.html">view species locations</a> that have been tracked via Angler Mate.</i></p>
-                <div class="center card" style=" padding: 15px; max-height: 80%; max-width: 90%; margin: 15px">
+                <h4><b><i>Angler Mate</i></b></h4>
+                <p><i>allows you <a href="analyse.html">match your fish photographs</a> against fish species for
+                        relevant regulations and advice.</i></p>
+                <p><i>Users can also <a href="monitoring.html">view species locations</a> that have been tracked via
+                        Angler Mate.</i></p>
+                <div class="center card" style=" padding: 15px; max-height: 60%; max-width: 90%; margin: 15px">
                     <img src="assets/pexels-fish.jpg" alt="" id="pexelPic" draggable="false"
                         class="fishCard responsive-img">
                 </div>
             </div>
             <div class="buttons">
-                <button class="btn btn-primary" style="margin: 5px;" onclick="window.location.href='./analyse.html'">Identify</button>
-                <button class="btn btn-primary" style="margin: 5px;" onclick="window.location.href='./monitoring.html'"> Track</button>
-                <button class="btn btn-primary" style="margin: 5px;" onclick="window.location.href='./dashboard.html'"> Dashboard</button>
+                <button class="btn btn-primary" style="margin: 5px;"
+                    onclick="window.location.href='./analyse.html'">Identify</button>
+                <button class="btn btn-primary" style="margin: 5px;" onclick="window.location.href='./monitoring.html'">
+                    Track</button>
+                <button class="btn btn-primary" style="margin: 5px;" onclick="window.location.href='./dashboard.html'">
+                    Dashboard</button>
 
             </div>
             <div class="row hidden" style="max-height: 200px;" id="fishPic">
@@ -70,14 +75,9 @@
         </div>
     </main>
     <footer class="page-footer">
-        <div class="footer-copyright">
-            <div class="container right">
-                © 2021 Copyright
-                <div class="tiny"><small-font><i>Photo by Taryn Elliott from Pexels</i></small-font></div>
-
-            </div>
-        </div>
+        © 2021 Copyright
     </footer>
+
 
     <!--needed for socket functionality-->
     <script src="/socket.io/socket.io.js"></script>

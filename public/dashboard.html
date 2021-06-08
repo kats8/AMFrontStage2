@@ -2,73 +2,74 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard</title>
 
-    <!-- Compiled and minified CSS -->
-    <!-- Materialze-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- Compiled and minified CSS -->
+  <!-- Materialze-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-    <!-- Materialize icons-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Materialize icons-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <link href="monitoring.css" rel="stylesheet">
+  <link href="monitoring.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+    integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+    crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+    integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+    crossorigin=""></script>
 
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
 </head>
 <header>
   <div class="card overlay hidden" id="alertInfo"></div>
   <nav>
-      <!--Navbar-->
-      <div class="nav-wrapper center underlay">
-        <!-- Centre icon-->
-        <a href="index.html" class="brand-logo center"><img src="assets/fishIcon.png" id="centreIcon" alt=""
-                style="max-height: 40px; padding-top: 2px; padding-bottom: 2px;"></a>
+    <!--Navbar-->
+    <div class="nav-wrapper center underlay">
+      <!-- Centre icon-->
+      <a href="index.html" class="brand-logo center"><img src="assets/fishIcon.png" id="centreIcon" alt=""
+          style="max-height: 40px; padding-top: 2px; padding-bottom: 2px;"></a>
 
-      </div>
+    </div>
   </nav>
 </header>
+
 <body>
-    <main>
-      <div class="center underlay">
-        <p style="font-size: larger;"><b>Where are my angler mates?</b></p>
-        <p><b><i>Real-time locations of online users</i></b></p>
-      </div>
+  <main>
+    <div class="center underlay">
+      <p style="font-size: larger;"><b>Where are my angler mates?</b></p>
+      <p><b><i>Real-time locations of online users</i></b></p>
+    </div>
 
-<br>
-
-          <div id="mapDiv" style="width: 100%; height: 400px;margin:2px;top:10px" class="center"></div>
-          <div class="buttons center" style="padding: 20px;">
-            <button id="homeBtn" class="btn btn-primary" onclick="window.location.href='./index.html'">Back to fish finding</button>
-        </div>
-    </main>
-    <footer class="page-footer">
-        <div class="footer-copyright">
-            <div class="container right">
-                © 2021 Copyright
-            </div>
-        </div>
-    </footer>
+    <div id="mapDiv" style="width: 100%; height: 400px;margin:2px;top:10px" class="center"></div>
+    <div class="buttons center" style="padding: 20px;">
+      <button id="homeBtn" class="btn btn-primary" onclick="window.location.href='./index.html'">Back to fish
+        finding</button>
+    </div>
+  </main>
+  <footer class="page-footer">
+    © 2021 Copyright
+  </footer>
 
 
-    <!--needed for socket functionality-->
-    <script src="/socket.io/socket.io.js"></script>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    
-<script src="dashboard.js"></script>
-    
+
+  <!--needed for socket functionality-->
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <script src="dashboard.js"></script>
+
 </body>
 
 </html>

@@ -68,7 +68,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     if (selectedFishSpecie == allfishes[k].fish) {
         // console.log(allfishes[k]);
         //set zoom level of map here
-       map.setView(fishcoords[0],4);// the second parameters of setView function needs the integer number value for zoom level
+       map.setView(fishcoords[0],3.2);// the second parameters of setView function needs the integer number value for zoom level
         marker = L.marker(fishcoords[k]).addTo(map).bindPopup("Species: "+allfishes[k].fish+", Lat: "+allfishes[k].lat+", Lng: "+allfishes[k].long);   
     }
   }

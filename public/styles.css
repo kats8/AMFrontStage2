@@ -1,6 +1,6 @@
-.helloInput {
-  width: 200px;
-}
+html {
+  height:100%;
+} 
 
 #urlBox {
     background-color: white;
@@ -10,6 +10,7 @@
     padding-right: 5px;
     border-radius: 5px;
     margin-top: 5px;
+    max-width: 90%;
 }
 
 #loadStatus {
@@ -31,12 +32,12 @@
 
 body {
   display: flex;
-    min-height: 100vh;
     flex-direction: column;
     background-color: rgb(225, 241, 241);
   color: rgb(67, 26, 26);
   font-family:Verdana, Geneva, Tahoma, sans-serif;
   z-index: 0;
+  min-height: 100%;
 }
 
 .alertText {
@@ -58,8 +59,9 @@ nav, nav .nav-wrapper i, nav a.sidenav-trigger, nav a.sidenav-trigger i {
 .page-footer, .page-header {
  /* background-color: #b6d2ca; */
   background-color: rgb(112, 178, 178);
-
 }
+
+
 
 
 main {
@@ -165,4 +167,12 @@ border-radius: 5px;
 
 #homeBtn{
   background-color: #205ffc;
+}
+
+.page-footer {
+  position:relative;
+  bottom:0px;
+  padding-bottom:10px;
+  padding-left:10px;
+  width:100%;
 }
