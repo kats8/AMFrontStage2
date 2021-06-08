@@ -10,6 +10,7 @@ let inputURL = "";
 $(document).ready(function () {
   document.documentElement.style.setProperty('--alertOpacity', `0`)
   $('#alertInfo').removeClass("hidden");
+  $('#loadStatus').html("");
   console.log('Ready');
 
 
@@ -62,6 +63,11 @@ $(document).ready(function () {
     //clear URL box (make clear to user now image is uploaded, any previously entered URL value won't be used for match)
     $('#urlBox').val("");
     $('#loadStatus').html("...loading");
+    //disable match button until file loaded
+   $( "#btnClassify" ).toggleClass( "disabled" );
+
+ 
+
   };
 
 
@@ -72,6 +78,8 @@ $(document).ready(function () {
       //if has loaded with response, change status to reflect file is loaded
       if (content.length>0){
           $('#loadStatus').html("loaded");
+          //re-enable match button
+          $( "#btnClassify" ).toggleClass( "disabled" );
       }
   }
 
@@ -115,7 +123,7 @@ $(document).ready(function () {
       }
       catch (e) {
         console.log(e);
-        $('#textInfo').html("We couldn't find a valid image at that URL");
+        $('#textInfo').html("We couldn't find a valid image at that location");
         $('#urlPic').attr("src", qMark);
       }
     }).then(result => $.get("/checkFishMatch", { body: result, socket: socketId, place: position }, function (matchInfo) {
