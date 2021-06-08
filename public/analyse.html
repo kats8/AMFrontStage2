@@ -37,35 +37,20 @@
         <!--The welcome screen shown to new users-->
         <div class="container center underlay" id="welcome">
             <div class="center ">
-                <p>To match your fish photographs against fish species for relevant regulations
-                    and advice, please provide the URL for your image below</p>
-                <input placeholder="enter your image URL here" id="urlBox" type="text" class="validate">
+                <p>To identify your fish and relevant regulations, please upload an image file or provide its web URL below</p>
+                <iframe name="dummyTarget" id="dummyTarget" class="hidden"></iframe>
+                <div id="data">
+                  <form action="/uploadPicture" enctype="multipart/form-data"  method="post" target="dummyTarget" id="uploadForm">
+                      <input type="file" name="fishPic" id="fishPic" size="20" required/>
+                  </form>
+              </div>
+                <input placeholder="or enter an image URL here" id="urlBox" type="text" class="validate">
                 <div class="row center">
-                    <a class="waves-effect waves-light btn" id="btnClassify">What have I caught?</a>
+                    <a class="waves-effect waves-light btn" id="btnClassify">What have I caught?</a> <a class="waves-effect waves-light btn" id="btnClear"><i class="large material-icons">refresh</i></a>
                 </div>
             </div>
-<!--
-            <div class="container">
-                <div class="button-wrap">
-                    <label class="button" for="upload">Upload File</label>
-                    <input id="upload" type="file">
-                </div>
-            </div>
-            <form action="/uploadPicture" 
-            enctype="multipart/form-data" method="POST">
-            
-              <span>Upload Picture:</span>  
-              <input type="file" name="fishPic1" required/> <br>
-              <input type="submit" value="submit"> 
-          </form>
-          -->
-          <div id="data">
-            <form>
-                <input type="file" name="fishPic" id="fishPic" size="20" />
-                <br /><br />
-                <input type="button" id="upload" value="upload" />
-            </form>
-        </div>
+
+
 
             <div class="row underlay" style="max-height: 200px;" id="picDiv">
                 <div class="center card underlay col s11 m6 l6"

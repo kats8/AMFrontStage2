@@ -4,17 +4,14 @@ const checkFishMatch = '/checkFishMatch';
 const qMark = 'assets/fishIcon.png';
 let socketId;
 let position;
+let fileURL = "";
+let inputURL = "";
 
 $(document).ready(function () {
   document.documentElement.style.setProperty('--alertOpacity', `0`)
   $('#alertInfo').removeClass("hidden");
   console.log('Ready');
-/*
-    $.get('/socketid', input, function (res) {
-      socketId = res
-    });
-  
-    */
+
 
   position = getPreciseLocation()
     .then((result) => {
@@ -58,8 +55,29 @@ $(document).ready(function () {
   $('#textInfo').addClass("hidden");
   $('#textInfo').html("");
 
+  //Code to upload file once chosen (from browse navigation) ready for matching and clear URL field
+  document.getElementById("fishPic").onchange = function () {
+    document.getElementById("uploadForm").submit();
+    //clear URL box (make clear to user now image is uploaded, any previously entered URL value won't be used for match)
+    $('#urlBox').val("");
+  };
+
+
+  $('#btnClear').click(() => {
+    //clear file upload (reset upload form submission) and all input fields
+    document.getElementById("uploadForm").reset();
+    document.getElementById('dummyTarget').contentWindow.document.body.innerHTML ="";
+    $('#urlBox').val("");
+  })
+
   $('#btnClassify').click(() => {
     let imageResult;
+    //get fileURL from form/file upload result
+    fileURL = document.getElementById('dummyTarget').contentWindow.document.body.innerHTML
+    //if fileURL not empty, we'll use it for our matching
+    if (fileURL.length > 0) {
+      $('#urlBox').val(fileURL);
+    }
     let inputURL = $('#urlBox').val();
     $('#textInfo').removeClass("hidden");
     //Displays 'please wait' while waiting for responses to be returned
@@ -85,8 +103,6 @@ $(document).ready(function () {
         $('#textInfo').html("We couldn't find a valid image at that URL");
         $('#urlPic').attr("src", qMark);
       }
-      //  }).then(result => $.get("/checkFishMatch", { body: result }, function (matchInfo) {
-//    }).then(result => $.get("/checkFishMatch", { body: [result, position], socket: socketId, place: position }, function (matchInfo) {
     }).then(result => $.get("/checkFishMatch", { body: result, socket: socketId, place: position }, function (matchInfo) {
 
       let matchData = jQuery.parseJSON(matchInfo);
@@ -109,14 +125,19 @@ $(document).ready(function () {
           textString = `Looks like a ${classFound}, but doesn't match any aquatic species on our database. More species are coming soon!`;
         }
         else {
-          textString = "Couldn't find a valid image at that URL.";
+          textString = "Couldn't find a valid image at that location.";
           $('#urlPic').attr("src", qMark);
         }
       }
       $('#textInfo').html(textString);
+      //ensure form ready for new file upload and old file URL cleared
+      document.getElementById("uploadForm").reset();
+      document.getElementById('dummyTarget').contentWindow.document.body.innerHTML = "";
     })).catch(function () {
-      $('#textInfo').html("We couldn't find a valid image at that URL.");
+      $('#textInfo').html("We couldn't find a valid image at that location.");
       $('#urlPic').attr("src", qMark);
+      document.getElementById("uploadForm").reset();
+      document.getElementById('dummyTarget').contentWindow.document.body.innerHTML = "";
     });
   })
   async function getPreciseLocation() {
@@ -126,27 +147,6 @@ $(document).ready(function () {
       });
     });
   }
-
-  $('#upload').click(function () {
-
-    console.log('attempting to upload file')
-    var fd = new FormData();
-    fd.append('fishPic', $('#fishPic')[0].files[0]);
-
-    $.ajax({
-     // url: 'upload/uploadImage',
-      url: 'http://localhost:8001/api/upload/uploadImage',
-      data: fd,
-      processData: false,
-      contentType: false,
-      type: 'POST',
-      success: function (data) {
-        console.log('upload success!')
-        $('#data').empty();
-        $('#data').append(data);
-      }
-    });
-  });
 
 })
 
