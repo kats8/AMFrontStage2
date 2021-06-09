@@ -15,8 +15,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 //to ensure timely tracking of disconnections
 
-//required for bucket upload ***** CHANGE TO ENV VARIABLES
-
+//required for bucket upload
 const ibm = require('ibm-cos-sdk');
 require('dotenv/config'); //load the config file env, can be used by calling process.env.{variableName} 
 let currentImageId = "";
@@ -24,11 +23,11 @@ let currentImageId = "";
 const config = {
 
   endpoint: 's3.au-syd.cloud-object-storage.appdomain.cloud',
-  apiKeyId: 'EiGkr_k8UB2IU2UQrBhWKvVIuAdG4ZELqKrL4X2zrbxD',
+  apiKeyId: process.env.API_KEY,
   serviceInstanceId: 'crn:v1:bluemix:public:cloud-object-storage:global:a/a45d044e68ff4d7a812125bc0a386c6a:72454b77-1720-42da-992d-3cb09d66a1db:bucket:cloud-object-storage-fish-images',
   region: 'au-syd',
-  accessKeyId: '062885388f434670965fa4f8ee517172',
-  secretAccessKey: 'e50fd1bf0f59192ff4de2bc5667ff7cc9af7d7afd8ceb903'
+  accessKeyId: process.env.ACCESS_KEY,
+  secretAccessKey: process.env.SECRET_ACCESS
 };
 const myBucket = 'cloud-object-storage-fish-images';
 
