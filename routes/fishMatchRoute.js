@@ -10,7 +10,6 @@ router.get('/', function (request, response) {
     let inBody = request.query.body;
     let pLat = null;
     let pLong = null;
-    // let theSocket = userSocket;
     //link for local testing (http://localhost:8081/) ------
    // reqObject = "http://localhost:8081/checkFishMatch?body=" + JSON.stringify(inBody);
     //----------
