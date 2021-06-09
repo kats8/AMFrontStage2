@@ -126,7 +126,7 @@ $(document).ready(function () {
         $('#textInfo').html("We couldn't find a valid image at that location");
         $('#urlPic').attr("src", qMark);
       }
-    }).then(result => $.get("/checkFishMatch", { body: result, socket: socketId, place: position }, function (matchInfo) {
+    }).then(result => $.get("/checkFishMatch", { body: result, socket: socketId, place: position, url: inputURL }, function (matchInfo) {
 
       let matchData = jQuery.parseJSON(matchInfo);
       //If a fish match was returned, fill in info accordingly

@@ -15,7 +15,7 @@ let onlineUsers = [];
 
 //route requires
 const classifierRoute = require('./routes/classifierRoute.js')
-const fishMatchRoute = require('./routes/fishMatchRoute.js')
+const fishMatchRoute = require('./routes/fishMatchRoute.js')(io)
 const uploadRoute = require('./routes/uploadRoute.js')
 const fishLocationRoute = require('./routes/fishLocationRoute.js')
 

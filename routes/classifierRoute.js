@@ -14,9 +14,9 @@ router.get("/", function (request, response) {
     //--------------
     //(for shortcut straight to cloud FAAS (testing): reqObject = urlRemoteVR+"?url="+imageURL;
     //local testing via local machine: reqObject = "http://localhost:8081/classifyURL?url="+imageURL+ "&lat="+lat+"&long="+long;
-    //reqObject = "http://localhost:8081/classifyURL?url="+imageURL+ "&lat="+lat+"&long="+long;
+    reqObject = "http://localhost:8081/classifyURL?url="+imageURL+ "&lat="+lat+"&long="+long;
     //-------------
-    reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/classifyURL?url="+imageURL+ "&lat="+lat+"&long="+long;
+    //reqObject = "https://anglermatehub.us-south.cf.appdomain.cloud/classifyURL?url="+imageURL+ "&lat="+lat+"&long="+long;
   
     req(reqObject, (err, result) => {
       if (err) { return console.log(err); }
