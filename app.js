@@ -3,12 +3,22 @@ const req = require("request");
 const express = require("express");
 const bodyParser = require("body-parser");
 const https = require('https');
+require('dotenv/config'); //load the config file env, can be used by calling process.env.{variableName} 
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 let userSocket;
 let onlineUsers = [];
+
+//routes
+const classifierRoute = require('./routes/classifierRoute.js')
+const fishMatchRoute = require('./routes/fishMatchRoute.js')
+
+app.use('/classifyURL', classifierRoute);
+app.use('/checkFishMatch', fishMatchRoute);
+
 
 //required for sockets
 const http = require('http').createServer(app);
@@ -17,7 +27,6 @@ const io = require('socket.io')(http);
 
 //required for bucket upload
 const ibm = require('ibm-cos-sdk');
-require('dotenv/config'); //load the config file env, can be used by calling process.env.{variableName} 
 let currentImageId = "";
 
 const config = {
@@ -128,6 +137,8 @@ app.get('/socketid', function (req, res) {
   console.log('broadcast change '+onlineUsers);
 });
 
+
+/*
 //get request - forwarding API to check if there's an image match for a fish in the database and returns details
 app.get('/checkFishMatch', function (request, response) {
   let inBody = request.query.body;
@@ -172,7 +183,9 @@ app.get('/checkFishMatch', function (request, response) {
     response.send(result.body);
   });
 });
+*/
 
+/*
 //get request - forwarding API for checking fish against database and returning details
 app.get("/classifyURL", function (request, response) {
   let imageURL = request.query.url;
@@ -195,7 +208,7 @@ app.get("/classifyURL", function (request, response) {
     console.log(result.body)
     response.send(result.body);
   });
-});
+}); */
 
 const getFishLocation = (resq) => {
   const https = require('https');
@@ -219,10 +232,7 @@ const getFishLocation = (resq) => {
     });
 
     response.on('end', function () {
-      //console.log(req.data);
-      //console.log(str);
       resq.send(JSON.parse(str));
-      // your code here if you want to use the results !
     });
   }
 
