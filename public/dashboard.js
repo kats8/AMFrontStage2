@@ -3,6 +3,7 @@ let onlineUserArray = [];
 let coords = [];
 let position;
 let initialCoord;
+let marker;
 
 //document ready function including socket functionalitiy for match alerts
 $(document).ready(function () {
@@ -70,7 +71,12 @@ $(document).ready(function () {
     console.log(onlineUserArray);
 
     //PROGRAM MAP REDRAW, ETC ACTIONS HERE
-    //map.remove();
+     //clear previous markers
+     if (marker) { 
+      map.removeLayer(marker); 
+      map.removeControl(marker);
+    }
+    
     drawInitialMap(onlineUserArray);
   });
 
@@ -82,9 +88,10 @@ $(document).ready(function () {
   })
 
   function drawInitialMap(coords) {
-      for (var k = 0; k < coords.length; k++) {
-        map.setView(coords[k], 4);
-        marker = L.marker(coords[k]).addTo(map).bindPopup("User: " + coords[k].user);
+   
+    for (var k = 0; k < coords.length; k++) {
+      map.setView(coords[k], 4);
+      marker = L.marker(coords[k]).addTo(map).bindPopup("User: " + coords[k].user);
     }
   }
 })
