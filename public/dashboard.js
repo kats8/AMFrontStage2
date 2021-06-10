@@ -10,11 +10,20 @@ $(document).ready(function () {
   $('#alertInfo').removeClass("hidden");
   console.log('Ready');
 
-initialCoord =     {"lat":-25,"lon":130,"info":"Dummy User 1"},
-// initialize map with Dummy user location
-map = L.map('mapDiv').setView(initialCoord, 3);
+  initialCoord = { "lat": -25, "lon": 130, "info": "Dummy User 1" },
+    // initialize map with Dummy user location
+    map = L.map('mapDiv').setView(initialCoord, 3);
+  map.eachLayer((layer) => {
+    layer.remove();
+  });
 
-    position = getPreciseLocation()
+  // set map tiles source
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 16,
+    worldCopyJump: false
+  }).addTo(map);
+
+  position = getPreciseLocation()
     .then((result) => {
       const loc = { location: result }
       position = result;
@@ -27,7 +36,7 @@ map = L.map('mapDiv').setView(initialCoord, 3);
       $.get('/socketid', input, function (res) {
         socketId = res
       });
-    
+
     })
     .catch((error) => {
       console.log(error);
@@ -62,9 +71,8 @@ map = L.map('mapDiv').setView(initialCoord, 3);
 
     //PROGRAM MAP REDRAW, ETC ACTIONS HERE
     //map.remove();
-    drawInitialMap(onlineUserArray);    
+    drawInitialMap(onlineUserArray);
   });
-
 
   //Use this to get array of current online users (eg, for initial map)
   $.get('/getSocketArray', function (res) {
@@ -74,23 +82,11 @@ map = L.map('mapDiv').setView(initialCoord, 3);
   })
 
   function drawInitialMap(coords) {
-   
-    map.eachLayer((layer) => {
-      layer.remove();
-    });
-  
-    // set map tiles source
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 16,
-      worldCopyJump: false
-    }).addTo(map);
-  
-    for (var k = 0; k <= coords.length; k++) {
-      map.setView(coords[k], 4);
-      marker = L.marker(coords[k]).addTo(map).bindPopup("User: " + coords[k].user);
+      for (var k = 0; k < coords.length; k++) {
+        map.setView(coords[k], 4);
+        marker = L.marker(coords[k]).addTo(map).bindPopup("User: " + coords[k].user);
     }
   }
-
 })
 
 async function getPreciseLocation() {

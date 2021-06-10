@@ -64,7 +64,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // set map tiles source
 
-  for(var k=0;k<=allfishes.length;k++){
+  for(var k=0;k<allfishes.length;k++){
     if (selectedFishSpecie == allfishes[k].fish) {
         // console.log(allfishes[k]);
         //set zoom level of map here

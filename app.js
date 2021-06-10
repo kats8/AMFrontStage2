@@ -32,7 +32,7 @@ app.use(express.static(__dirname + '/public'));
 io.on('connection', (socket) => {
   console.log('user connected');
   userSocket = socket.id;
-  console.log('user connected on: '+userSocket)
+  console.log('user connected on: ' + userSocket)
   socket.on('disconnect', () => {
     console.log('user disconnected from ' + socket.id);
     for (var i = 0; i < onlineUsers.length; i++) {
@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
     }
     console.log(onlineUsers);
     io.emit('socketChange', onlineUsers);
-    console.log('broadcast change '+onlineUsers);
+    console.log('broadcast change ' + onlineUsers);
   });
 
 });
@@ -56,11 +56,20 @@ app.get('/getSocketArray', function (req, res) {
 
 //endpoint to give client their socketId
 app.get('/socketid', function (req, res) {
-  //will add user to server list using socket and location and advise user of their socketID
-  let userLat = req.query.lat;
-  let userLong = req.query.long;
-  userInfo = req.query.user;
+  let userLat = "";
+  let userLong = "";
+  let userInfo = "unknown";
 
+  //will add user to server list using socket and location and advise user of their socketID
+
+  try {
+    userLat = req.query.lat;
+    userLong = req.query.long;
+    userInfo = req.query.user;
+  }
+  catch (e) {
+    console.log(e);
+  }
   let newUser =
   {
     lat: userLat,
@@ -72,7 +81,8 @@ app.get('/socketid', function (req, res) {
   console.log(onlineUsers);
   res.send(userSocket);
   io.emit('socketChange', onlineUsers);
-  console.log('broadcast change '+onlineUsers);
+  console.log('broadcast change ' + onlineUsers);
+
 });
 
 http.listen(port);
