@@ -3,7 +3,7 @@ let onlineUserArray = [];
 let coords = [];
 let position;
 let initialCoord;
-let marker;
+let marker = [];
 
 //tell server this socket is still in use
 setInterval(() => {
@@ -64,15 +64,8 @@ $(document).ready(function () {
     //can program actions in here for what is to happen when the online users change (eg, redraw of map using new cooardinates)
     //onlineUsers contains the updated array of lat/long coordinates ([lat: xx, long: xx, info: xx])
     onlineUserArray = onlineUsers;
-    console.log(onlineUserArray);
+    //console.log(onlineUserArray);
     //PROGRAM MAP REDRAW, ETC ACTIONS HERE
-    //clear previous markers
-    for (var i = 0; i < 10; i++) {
-      if (marker) {
-        map.removeLayer(marker);
-        map.removeControl(marker);
-      }
-    }
     drawInitialMap(onlineUserArray);
   });
 
@@ -107,13 +100,15 @@ $(document).ready(function () {
 
   function drawInitialMap(coords) {
     //clear previous markers
-    if (marker) {
-      map.removeLayer(marker);
-      map.removeControl(marker);
-    }
+    for(i=0;i<marker.length;i++) {
+      map.removeLayer(marker[i]);
+      } 
+
     for (var k = 0; k < coords.length; k++) {
       map.setView(coords[k], 4);
-      marker = L.marker(coords[k]).addTo(map).bindPopup("User: " + coords[k].user);
+      aMarker = L.marker(coords[k]).addTo(map).bindPopup("User: " + coords[k].user);
+      marker.push(aMarker);
+      map.addLayer(marker[marker.length-1]);
     }
   }
 })
