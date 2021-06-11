@@ -118,7 +118,7 @@ setInterval(() => {
     }
   }
   io.emit('socketChange', onlineUsers);
-  console.log(onlineUsers);
+  //console.log(onlineUsers);
 }, 1000);
 
 http.listen(port);
