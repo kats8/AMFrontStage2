@@ -7,6 +7,11 @@ let position;
 let fileURL = "";
 let inputURL = "";
 
+setInterval(() => {
+  $.get('/heartbeat', { socket: socketId })
+  console.log(socketId);
+}, 2000);
+
 $(document).ready(function () {
   document.documentElement.style.setProperty('--alertOpacity', `0`)
   $('#alertInfo').removeClass("hidden");

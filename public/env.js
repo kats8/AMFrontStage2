@@ -1,18 +1,15 @@
 let socketId;
 let position;
 
+setInterval(() => {
+  $.get('/heartbeat', { socket: socketId })
+  console.log(socketId);
+}, 2000);
 
 $(document).ready(function () {
   document.documentElement.style.setProperty('--alertOpacity', `0`)
   $('#alertInfo').removeClass("hidden");
   console.log('Ready');
-
-/*
-    $.get('/socketid', input, function (res) {
-      socketId = res
-    });
-  
-    */
 
     position = getPreciseLocation()
     .then((result) => {
@@ -32,8 +29,6 @@ $(document).ready(function () {
     .catch((error) => {
       console.log(error);
     });
-
-
 
 
   var socketConnection = io.connect();

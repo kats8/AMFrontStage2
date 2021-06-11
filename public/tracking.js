@@ -2,6 +2,10 @@
 let socketId;
 let position;
 
+setInterval(() => {
+  $.get('/heartbeat', { socket: socketId })
+  console.log(socketId);
+}, 2000);
 
 var allfishes=[];
 var selectmenu=document.getElementById("dropmenu");
