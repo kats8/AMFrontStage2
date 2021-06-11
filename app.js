@@ -59,7 +59,7 @@ app.get('/socketid', function (req, res) {
   let userLat = "";
   let userLong = "";
   let userInfo = "unknown";
-  let ttl = 10000;
+  let ttl = 5000;
 
   //will add user to server list using socket and location and advise user of their socketID
   try {
@@ -86,7 +86,7 @@ app.get('/socketid', function (req, res) {
   io.emit('socketChange', onlineUsers);
 });
 
-//heartbeat/poll to only keep live browsers
+//heartbeat/poll to only keep live browser connections
 app.get('/heartbeat', function (req, res) {
   //update ttl for socket
   let inSocket = req.query.socket;
@@ -117,7 +117,6 @@ setInterval(() => {
       io.emit('socketChange', onlineUsers);
     }
   }
-  io.emit('socketChange', onlineUsers);
   //console.log(onlineUsers);
 }, 1000);
 

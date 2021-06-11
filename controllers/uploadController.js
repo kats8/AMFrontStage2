@@ -28,7 +28,6 @@ const imageUploader = function () {
         console.log(file);
         currentImageId = (String(Math.floor(Math.random() * 99999))) + file.originalname;
         cb(null, currentImageId);
-
       }
     })
 
