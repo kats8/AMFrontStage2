@@ -37,51 +37,52 @@
         <!--The welcome screen shown to new users-->
         <div class="container center underlay" id="welcome">
             <div class="center ">
-                <p>To identify your fish and relevant regulations, please upload an image file or provide its web URL below</p>
+                <p>To identify your fish and relevant regulations, please upload an image file or provide its web URL
+                    below</p>
                 <iframe name="dummyTarget" id="dummyTarget" class="hidden"></iframe>
                 <div id="data">
-                  <form action="/uploadPicture" enctype="multipart/form-data"  method="post" target="dummyTarget" id="uploadForm">
-                      <input type="file" name="fishPic" id="fishPic" size="20" required/><span id="loadStatus"></span>
-                  </form>
-              </div>
+                    <form action="/uploadPicture" enctype="multipart/form-data" method="post" target="dummyTarget"
+                        id="uploadForm">
+                        <input type="file" name="fishPic" id="fishPic" size="20" required /><span
+                            id="loadStatus"></span>
+                    </form>
+                </div>
                 <input placeholder="or enter an image URL here" id="urlBox" type="text" class="validate">
                 <div class="row center">
-                    <a class="waves-effect waves-light btn" id="btnClassify">What have I caught?</a> <a class="waves-effect waves-light btn" id="btnClear"><i class="large material-icons">refresh</i></a>
+                    <a class="waves-effect waves-light btn" id="btnClassify">What have I caught?</a> <a
+                        class="waves-effect waves-light btn" id="btnClear"><i
+                            class="large material-icons">refresh</i></a>
                 </div>
             </div>
-
-
 
             <div class="row underlay" style="max-height: 200px;" id="picDiv">
                 <div class="center card underlay col s11 m6 l6"
                     style=" padding: 10px; max-height: 40vh; max-width: 100%; margin: 10px">
-                    <img src="assets/fishIcon.png" style = "max-height: 35vh;" alt="" id="urlPic" draggable="false" class="fishCard responsive-img">
+                    <img src="assets/fishIcon.png" style="max-height: 35vh;" alt="" id="urlPic" draggable="false"
+                        class="fishCard responsive-img">
                 </div>
                 <div class="center card underlay col s11 m6 l6 hidden" id="textInfo"
                     style="padding: 10px; max-height: 35vh; max-width: 100%; margin: 10px ">
                 </div>
 
             </div>
-            
 
         </div>
-   
-        </div>
-        </div>
-        <div class="buttons center">
+
+        <br style="clear: both;"> 
+        <div class="row center buttons">
             <button id="homeBtn" class="btn btn-primary" onclick="window.location.href='./index.html'">Home</button>
             <button class="btn btn-primary" onclick="window.location.href='./monitoring.html'"> Track</button>
-            <button class="btn btn-primary" onclick="window.location.href='./dashboard.html'"> Dashboard</button
-
+            <button class="btn btn-primary" onclick="window.location.href='./dashboard.html'"> Dashboard</button>
         </div>
-
         <!-- displays for monitoring fish species-->
         <div id="viewLocation" class="container center hidden">
 
         </div>
+
     </main>
     <footer class="page-footer">
-                © 2021 Copyright
+        © 2021 Copyright
     </footer>
 
     <!--needed for socket functionality-->
